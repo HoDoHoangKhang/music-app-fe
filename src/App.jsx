@@ -1,24 +1,21 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes } from "./routes";
+import { useContext } from "react";
+import Display from "./components/Display";
+import Player from "./components/Player";
+import Sidebar from "./components/Sidebar";
+import { PlayerContext } from "./context/PlayerContext";
 
-function App() {
+const App = () => {
+    const { audioRef, track } = useContext(PlayerContext);
     return (
-        <div>
-            <h2>header</h2>
-            <Router>
-                <div className="App">
-                    <Routes>
-                        {publicRoutes.map((route, index) => {
-                            const Page = route.component;
-                            return (
-                                <Route key={index} path={route.path} element={<Page />}></Route>
-                            );
-                        })}
-                    </Routes>
-                </div>
-            </Router>
+        <div className="h-screen bg-black box-border">
+            <div className="h-[90%] flex">
+                <Sidebar />
+                <Display />
+            </div>
+            <Player />
+            <audio ref={audioRef} src={track.file} preload="auto"></audio>
         </div>
     );
-}
+};
 
 export default App;

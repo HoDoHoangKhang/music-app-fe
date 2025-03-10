@@ -26,7 +26,7 @@ const DisplayAlbum = () => {
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-3 sm:grid-cols-4 mt-10 mb-4 pl-2 text-[#a7a7a7]">
+      <div className="grid grid-cols-3 sm:grid-cols-4 mt-10 mb-4 pl-2 text-[#a7a7a7] font-bold">
         <p><b className="mr-4">#</b>Title</p>
         <p>Album</p>
         <p className="hidden sm:block">Date Added</p>
@@ -35,9 +35,9 @@ const DisplayAlbum = () => {
       <hr />
       {songsData.map((item, index) => (
         <div onClick={() => playWithId(item.id)} key={item.id} className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer">
-          <div className="text-white text-sm md:text-[15px]">
+          <div className="text-white text-sm md:text-[15px] flex items-center">
             <b className="mr-4 text-[#a7a7a7]">{index + 1}</b>
-            <img className="inline w-10 mb-5 mr-5" src={item.image} alt={item.name} />
+            <img className="inline w-14 mr-5 rounded-sm" src={item.image} alt={item.name} />
             <div className="inline-block">
               <div>{item.name.slice(0, 20)}</div>
               <div className="text-[#a7a7a7]">{item.desc.slice(0, 20)}</div>

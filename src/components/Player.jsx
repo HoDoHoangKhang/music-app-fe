@@ -9,14 +9,14 @@ const Player = () => {
       className="h-[10%] bg-black flex justify-between items-center
     text-white px-4"
     >
-      <div className="hidden lg:flex items-center gap-4">
-        <img className="w-12" src={track.image} alt="song_Data" />
+      <div className="hidden lg:flex items-center gap-4 w-[350px]">
+        <img className="w-12 rounded-full" src={track.image} alt="song_Data" />
         <div>
           <p>{track.name}</p>
           <p className="">{track.desc.slice(0, 43)}</p>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-1 m-auto">
+      <div className="flex flex-col items-center gap-1 m-auto flex-1">
         <div className="flex gap-4">
           <img
             className="w-4 cursor-pointer"
@@ -58,11 +58,11 @@ const Player = () => {
           <p>{time.totalTime.minute}:{time.totalTime.second}</p>
         </div>
       </div>
-      <div className="hidden lg:flex items-center gap-2 opacity-75">
+      <div className="hidden lg:flex items-center gap-4 opacity-75">
         <img className="w-4" src={assets.plays_icon} alt="" />
         <img className="w-4" src={assets.mic_icon} alt="" />
         <img className="w-4" src={assets.queue_icon} alt="" />
-        <img className="w-4" src={assets.speaker_icon} alt="" />
+        {/* <img className="w-4" src={assets.speaker_icon} alt="" /> */}
         <img className="w-4" src={assets.volume_icon} alt="" />
         <div className="w-20 bg-slate-50 h-1 rounded"></div>
         <img className="w-4" src={assets.mini_player_icon} alt="" />

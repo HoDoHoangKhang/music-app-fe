@@ -25,3 +25,5 @@ npm i @tippyjs/react
 
 // react-icon
 npm install react-icons --save
+
+//npm install @headlessui/react

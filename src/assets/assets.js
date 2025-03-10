@@ -44,6 +44,9 @@ import song3 from  './song3.mp3'
 import song4 from  './song4.mp3'
 import song5 from  './song5.mp3'
 import song6 from  './song6.mp3'
+import song7 from "./song7.mp3";
+import song8 from "./song8.mp3";
+import song9 from "./song9.mp3";
 
 export const assets = {
     bell_icon,
@@ -76,7 +79,7 @@ export const albumsData = [
     {   
         id:0,
         name: "Top 50 Global",
-        image: img8,
+        image: img13,
         desc:"Your weekly update of the most played tracks",
         bgColor:"#2a4365"
     },
@@ -120,66 +123,66 @@ export const albumsData = [
 export const songsData = [
     {
         id:0,
-        name: "Kutti Story",
+        name: "Dù Cho Tận Thế",
         image: img1,
         file:song1,
-        desc:"Aniruth Ravichander,Thalapathy Vijay",
+        desc:"Erik",
         duration:"5:22"
     },
     {
         id:1,
-        name: "VIP Title Song",
+        name: "Mất Kết Nối",
         image: img2,
         file:song2,
-        desc:"Anirudh Ravichander",
+        desc:"Dương DOMIC",
         duration:"2:43"
     },
     {
         id:2,
-        name: "Dharala Prabhu Title Track",
+        name: "Exit Sign",
         image: img3,
         file:song3,
-        desc:"Anirudh Ravichander",
+        desc:"HIEUTHUHAI",
         duration:"3:42"
     },
     {
         id:3,
-        name: "Hukum-Thalaivar Alappara",
+        name: "Chúng Ta Của Tương Lai",
         image: img4,
         file:song4,
-        desc:"Anirudh Ravichander,Super Subu",
+        desc:"Sơn Tùng MTP",
         duration:"3:26"
     },
     {
         id:4,
-        name: "Illuminati",
+        name: "Hoàng Hôn Nhớ",
         image: img5,
         file:song5,
-        desc:"Sushin Shyam, Dabzee, Vinayak Sasikumar",
+        desc:"Anh Tú",
         duration:"2:28"
     },
     {
         id:5,
-        name: "Idhazin Oram-The Innocence of Love",
+        name: "Sắp Nôi Tiếng",
         image: img6,
         file:song6,
-        desc:"Anirudh Ravichander,Ajesh",
+        desc:"HIEUTHUHAI",
         duration:"3:24"
     },
     {
         id:6,
-        name: "Vaathi Coming",
+        name: "Not Like Us",
         image: img7,
-        file:song1,
-        desc:"Aniruth Ravichander,Thalapathy Vijay",
+        file:song7,
+        desc:"Kendrick Lamar",
         duration:"3:48"
     },
     {
         id:7,
-        name: "What a Karavaad",
-        image: img2,
-        file:song2,
-        desc:"Anirudh Ravichander,Dhanush",
+        name: "SKY DECASE",
+        image: img8,
+        file:song8,
+        desc:"Sơn Tùng MTP",
         duration:"4:27"
     }
 ]

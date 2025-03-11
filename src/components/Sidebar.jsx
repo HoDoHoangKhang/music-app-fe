@@ -57,10 +57,8 @@ const Sidebar = () => {
                         className="w-12 rounded-full"
                     />
                     <div>
-                        <h1>Group 1</h1>
-                        <p className="font-light">
-                            Hoang Khang: Share link music
-                        </p>
+                        <h1>Đom Đóm</h1>
+                        <p className="font-light">Hoang Khang: Share...</p>
                     </div>
                 </div>
                 <div
@@ -74,9 +72,7 @@ const Sidebar = () => {
                     />
                     <div>
                         <h1>Sky</h1>
-                        <p className="font-light">
-                            Hoang Khang: Share link music
-                        </p>
+                        <p className="font-light">Hoang Khang: Share... </p>
                     </div>
                 </div>
                 <Dialog
@@ -85,8 +81,8 @@ const Sidebar = () => {
                     className="relative z-50 "
                 >
                     <div className="fixed inset-0 bg-black/70 flex w-screen items-center justify-center p-4">
-                        <DialogPanel className=" w-2xl space-y-4 bg-black rounded-md h-[80vh] overflow-y-auto text-white bg-linear-to-b  from-[#283328] to-black ">
-                            <DialogTitle className="sticky top-0 z-100 left-0 right-0 flex items-center justify-between bg-white/5 backdrop-blur-2xl px-6 py-3">
+                        <DialogPanel className="bg-white/5 backdrop-blur-3xl w-2xl space-y-4  rounded-md h-[80vh] overflow-y-auto text-white">
+                            <DialogTitle className="sticky top-0 z-100 left-0 right-0 flex items-center justify-between bg-[#322E2E] px-6 py-3">
                                 <div className="flex items-center gap-6">
                                     <FaArrowLeft
                                         onClick={() => {
@@ -211,7 +207,7 @@ const Sidebar = () => {
                                 </div>
                             </Description>
                             <div className="sticky bottom-0 left-0 right-0 p-3">
-                                <div className="bg-white/5 backdrop-blur-3xl p-3 rounded-sm">
+                                <div className="bg-[#322E2E]  p-3 rounded-sm">
                                     <textarea
                                         placeholder="Enter messager"
                                         className="w-full outline-none mb-2"

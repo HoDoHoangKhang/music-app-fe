@@ -4,24 +4,32 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 //icon
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
+//Tippy
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css"; // optional
+
 const Navbar = () => {
     const naviagte = useNavigate();
     return (
         <>
             <div className="w-full flex justify-between items-center font-semibold">
                 <div className="flex items-center gap-2">
-                    <img
-                        className="w-8 bg-black p-2 rounded-2xl cursor-pointer"
-                        src={assets.arrow_left}
-                        alt=""
-                        onClick={() => naviagte(-1)}
-                    />
-                    <img
-                        className="w-8 bg-black p-2 rounded-2xl cursor-pointer"
-                        src={assets.arrow_right}
-                        alt=""
-                        onClick={() => naviagte(+1)}
-                    />
+                    <Tippy content="Back" placement="left">
+                        <img
+                            className="w-8 bg-black p-2 rounded-2xl cursor-pointer"
+                            src={assets.arrow_left}
+                            alt=""
+                            onClick={() => naviagte(-1)}
+                        />
+                    </Tippy>
+                    <Tippy content="Next" placement="right">
+                        <img
+                            className="w-8 bg-black p-2 rounded-2xl cursor-pointer"
+                            src={assets.arrow_right}
+                            alt=""
+                            onClick={() => naviagte(+1)}
+                        />
+                    </Tippy>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="bg-white text-black rounded-full cursor-pointer px-3 py-1  border-[#ffffff26] flex items-center justify-center">

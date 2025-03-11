@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import DisplayHome from "./DisplayHome";
 import DisplayAlbum from "./DisplayAlbum";
+import Cart from "./Cart";
 import { useEffect, useRef } from "react";
 import { albumsData } from "../assets/assets";
 
@@ -27,6 +28,7 @@ const Display = () => {
             <Routes>
                 <Route path="/" element={<DisplayHome />} />
                 <Route path="/album/:id" element={<DisplayAlbum />} />
+                <Route path="/cart" element={<Cart />} />
             </Routes>
         </div>
     );

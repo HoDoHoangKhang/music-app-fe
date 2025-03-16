@@ -14,29 +14,17 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { GrAttachment } from "react-icons/gr";
 import { RiEmotionHappyLine } from "react-icons/ri";
+import { IoChatbubblesOutline } from "react-icons/io5";
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const navigate = useNavigate();
     return (
-        <div className="w-[25%] h-full p-2 flex-col gap-2 text-white hidden lg:flex">
-            <div className="bg-[#121212] h-[15%] rounded flex flex-col justify-around">
-                <div
-                    onClick={() => navigate("/")}
-                    className="flex items-center gap-3 pl-4 cursor-pointer"
-                >
-                    <img className="w-6" src={assets.home_icon} alt="" />
-                    <p className="font-b old">Home</p>
-                </div>
-                <div className="flex items-center gap-3 pl-4 cursor-pointer">
-                    <img className="w-6" src={assets.search_icon} alt="" />
-                    <p className="font-b old">Search</p>
-                </div>
-            </div>
-            <div className="bg-[#121212] h-[85%] rounded">
+        <div className=" flex-col gap-2 text-white hidden lg:flex h-[100%]">
+            <div className="bg-[#121212] h-[100%] rounded">
                 <div className="p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <LuMessageSquareShare className="text-2xl" />
+                        <IoChatbubblesOutline className="text-2xl" />
                         <p className="font-semibold">Box chat</p>
                     </div>
                     <div className="flex items-center gap-3">
@@ -49,7 +37,7 @@ const Sidebar = () => {
                 </div>
                 <div
                     onClick={() => setIsOpen(true)}
-                    className="p-2 py-3 bg-[#242424] m-2 rounded font-semibold flex gap-2 pl-4 items-center hover:cursor-pointer hover:bg-[#424242]"
+                    className="p-2 py-2 bg-[#242424] m-2 rounded font-semibold flex gap-2 pl-2 items-center hover:cursor-pointer hover:bg-[#424242]"
                 >
                     <img
                         src="https://img.saostar.vn/pc/1617420375728/saostar-8yu6gl1qba4r213r.png"
@@ -63,7 +51,7 @@ const Sidebar = () => {
                 </div>
                 <div
                     onClick={() => setIsOpen(true)}
-                    className="p-2 py-3 bg-[#242424] m-2 rounded font-semibold flex gap-2 pl-4 items-center hover:cursor-pointer hover:bg-[#424242]"
+                    className="p-2 py-2 bg-[#242424] m-2 rounded font-semibold flex gap-2 pl-2 items-center hover:cursor-pointer hover:bg-[#424242]"
                 >
                     <img
                         src="https://th.bing.com/th/id/OIP.eegLpchavZrYUCu60PRoQAHaHa?rs=1&pid=ImgDetMain"

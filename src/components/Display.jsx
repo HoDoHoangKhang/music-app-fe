@@ -4,6 +4,7 @@ import DisplayAlbum from "./DisplayAlbum";
 import Cart from "./Cart";
 import { useEffect, useRef } from "react";
 import { albumsData } from "../assets/assets";
+import Header from "./Header";
 
 const Display = () => {
     const displayRef = useRef();
@@ -23,7 +24,7 @@ const Display = () => {
     return (
         <div
             ref={displayRef}
-            className="w-[100%] m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto lg:w-[75%] lg:ml-0"
+            className="h-[100%] px-4 pt-1 rounded bg-[#121212] text-white overflow-auto"
         >
             <Routes>
                 <Route path="/" element={<DisplayHome />} />

@@ -1,25 +1,38 @@
 import React from 'react'
-import { FaSpotify } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
 import { assets } from "../assets/assets";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 //icon
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { IoLogoVk } from "react-icons/io5";
 import { IoLogoSlack } from "react-icons/io";
-import { RxStitchesLogo } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 //Tippy
 import Tippy from "@tippyjs/react";
 
 const Header = () => {
+    const navigate = useNavigate();
+        const handleLogout = () => {
+            localStorage.removeItem("user_id");
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            navigate("/login");
+        };
   return (
       <div className="text-white h-[10%] flex px-2 justify-between">
           <div className="flex items-center gap-2">
-              <div className="p-[6px] text-2xl bg-pink-500/30 cursor-pointer text-pink-500 rounded-full">
+              <div
+                  onClick={() => navigate("/")}
+                  className="p-[6px] text-2xl bg-pink-500/30 cursor-pointer text-pink-500 rounded-full"
+              >
                   <IoLogoSlack className=""></IoLogoSlack>
               </div>
-              <button className="text-xl bg-[#242424] p-2 rounded-full cursor-pointer">
+              <button
+                  onClick={() => navigate("/")}
+                className="text-xl bg-[#242424] p-2 rounded-full cursor-pointer"
+              >
                   <GoHomeFill />
               </button>
           </div>
@@ -52,18 +65,18 @@ const Header = () => {
                           <MenuItem>
                               <a
                                   className="block rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
-                                  href="/support"
+                                  href="/profile"
                               >
                                   Profile
                               </a>
                           </MenuItem>
                           <MenuItem>
-                              <a
+                              <button
+                                    onClick={handleLogout}
                                   className="block rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
-                                  href="/license"
                               >
                                   Logout
-                              </a>
+                              </button>
                           </MenuItem>
                       </MenuItems>
                   </Menu>

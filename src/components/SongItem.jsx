@@ -7,10 +7,12 @@ const SongItem = ({ name, image, desc, id }) => {
     return (
         <div
             onClick={() => playWithId(id)}
-            className="min-w-[160px] p-2 rounded cursor-pointer hover:bg-[#ffffff26]"
+            className="min-w-[160px] p-2 rounded cursor-pointer hover:bg-[#ffffff26]  max-w-[145px]"
         >
             <img className="rounded" src={image} alt="" />
-            <p className="font-bold mt-2 mb-1">{name}</p>
+            <p onClick={() => {}} className="font-bold mt-2 mb-1">
+                {name}
+            </p>
             <p className="text-slate-200 text-sm">{desc}</p>
         </div>
     );

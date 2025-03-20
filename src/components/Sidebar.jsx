@@ -20,7 +20,7 @@ const Sidebar = () => {
 
     const navigate = useNavigate();
     return (
-        <div className=" flex-col gap-2 text-white hidden lg:flex h-[100%]">
+        <div className=" flex-col gap-2 text-white lg:flex h-[100%]">
             <div className="bg-[#121212] h-[100%] rounded">
                 <div className="p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -37,7 +37,7 @@ const Sidebar = () => {
                 </div>
                 <div
                     onClick={() => setIsOpen(true)}
-                    className="p-2 py-2 bg-[#242424] m-2 rounded font-semibold flex gap-2 pl-2 items-center hover:cursor-pointer hover:bg-[#424242]"
+                    className="p-2 py-2 bg-white/4 m-2 rounded font-semibold flex gap-2 pl-2 items-center hover:cursor-pointer hover:bg-[#424242]"
                 >
                     <img
                         src="https://img.saostar.vn/pc/1617420375728/saostar-8yu6gl1qba4r213r.png"
@@ -51,7 +51,7 @@ const Sidebar = () => {
                 </div>
                 <div
                     onClick={() => setIsOpen(true)}
-                    className="p-2 py-2 bg-[#242424] m-2 rounded font-semibold flex gap-2 pl-2 items-center hover:cursor-pointer hover:bg-[#424242]"
+                    className="p-2 py-2 bg-white/4 m-2 rounded font-semibold flex gap-2 pl-2 items-center hover:cursor-pointer hover:bg-[#424242]"
                 >
                     <img
                         src="https://th.bing.com/th/id/OIP.eegLpchavZrYUCu60PRoQAHaHa?rs=1&pid=ImgDetMain"

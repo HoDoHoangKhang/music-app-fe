@@ -5,6 +5,8 @@ import Cart from "./Cart";
 import { useEffect, useRef } from "react";
 import { albumsData } from "../assets/assets";
 import Header from "./Header";
+import Artist from "./Artist";
+import Login from "./Ath/Login";
 
 const Display = () => {
     const displayRef = useRef();
@@ -24,12 +26,13 @@ const Display = () => {
     return (
         <div
             ref={displayRef}
-            className="h-[100%] px-4 pt-1 rounded bg-[#121212] text-white overflow-auto"
+            className="h-[100%] rounded bg-[#121212] text-white overflow-auto"
         >
             <Routes>
                 <Route path="/" element={<DisplayHome />} />
                 <Route path="/album/:id" element={<DisplayAlbum />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/artist/:id" element={<Artist />} />
             </Routes>
         </div>
     );

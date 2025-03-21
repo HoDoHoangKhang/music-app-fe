@@ -7,6 +7,7 @@ import { albumsData } from "../assets/assets";
 import Header from "./Header";
 import Artist from "./Artist";
 import Login from "./Ath/Login";
+import Chat from "./Chat";
 
 const Display = () => {
     const displayRef = useRef();
@@ -33,6 +34,7 @@ const Display = () => {
                 <Route path="/album/:id" element={<DisplayAlbum />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/artist/:id" element={<Artist />} />
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </div>
     );

@@ -1,7 +1,9 @@
 import React from "react";
 import { LuLibrary } from "react-icons/lu";
 import { FaPlus } from "react-icons/fa6";
-
+import {
+    FaSearch,
+} from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 const categories = [
     { id: "playlists", label: "Playlists", active: false },
@@ -24,7 +26,14 @@ const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
                     </button>
                 </div>
             </div>
-
+            <div className="relative group">
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 group-hover:text-green-500 transition-colors" />
+                <input
+                    type="text"
+                    placeholder="Search chats"
+                    className="w-full bg-zinc-800/50 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all placeholder-zinc-500"
+                />
+            </div>
             {/* Categories */}
             <div className="flex flex-wrap gap-2 mb-4">
                 {categories.map((category) => (

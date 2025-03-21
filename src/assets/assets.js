@@ -125,7 +125,7 @@ export const songsData = [
         id:0,
         name: "Dù Cho Tận Thế",
         image: img1,
-        file:song1,
+        file_url:song1,
         desc:"Erik",
         duration:"5:22"
     },
@@ -133,7 +133,7 @@ export const songsData = [
         id:1,
         name: "Mất Kết Nối",
         image: img2,
-        file:song2,
+        file_url:song2,
         desc:"Dương DOMIC",
         duration:"2:43"
     },
@@ -141,7 +141,7 @@ export const songsData = [
         id:2,
         name: "Exit Sign",
         image: img3,
-        file:song3,
+        file_url:song3,
         desc:"HIEUTHUHAI",
         duration:"3:42"
     },
@@ -149,7 +149,7 @@ export const songsData = [
         id:3,
         name: "Chúng Ta Của Tương Lai",
         image: img4,
-        file:song4,
+        file_url:song4,
         desc:"Sơn Tùng MTP",
         duration:"3:26"
     },
@@ -157,7 +157,7 @@ export const songsData = [
         id:4,
         name: "Hoàng Hôn Nhớ",
         image: img5,
-        file:song5,
+        file_url:song5,
         desc:"Anh Tú",
         duration:"2:28"
     },
@@ -165,7 +165,7 @@ export const songsData = [
         id:5,
         name: "Sắp Nôi Tiếng",
         image: img6,
-        file:song6,
+        file_url:song6,
         desc:"HIEUTHUHAI",
         duration:"3:24"
     },
@@ -173,7 +173,7 @@ export const songsData = [
         id:6,
         name: "Not Like Us",
         image: img7,
-        file:song7,
+        file_url:song7,
         desc:"Kendrick Lamar",
         duration:"3:48"
     },
@@ -181,7 +181,7 @@ export const songsData = [
         id:7,
         name: "SKY DECASE",
         image: img8,
-        file:song8,
+        file_url:song8,
         desc:"Sơn Tùng MTP",
         duration:"4:27"
     }

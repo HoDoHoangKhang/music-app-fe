@@ -7,7 +7,7 @@ import PlayerContextProvider from "./context/PlayerContext.jsx";
 import Login from "./components/Ath/Login.jsx";
 import Register from "./components/Ath/Register.jsx";
 import ProtectedRoute from "./components/Ath/ProtectedRoute.jsx";
-
+import { Theme, ThemePanel } from "@radix-ui/themes";
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <BrowserRouter>
@@ -25,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         }
                     />
                 </Routes>
+
             </PlayerContextProvider>
         </BrowserRouter>
     </React.StrictMode>

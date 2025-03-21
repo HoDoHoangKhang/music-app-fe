@@ -19,21 +19,27 @@ const Player = () => {
         next,
         seekSong,
     } = useContext(PlayerContext);
+    console.log(track);
     return (
         <div
             className="h-[10%] bg-black flex justify-between items-center
     text-white px-4"
         >
             <div className="hidden lg:flex items-center gap-4 w-[350px]">
-                <img
-                    className="w-12 rounded-full"
-                    src={track.image}
-                    alt="song_Data"
-                />
-                <div>
-                    <p>{track.name}</p>
-                    <p className="">{track.desc.slice(0, 43)}</p>
-                </div>
+                { track && (
+                    <>
+                        <img
+                            className="w-12 rounded-full"
+                            src={track.cover_image}
+                            alt="song_Data"
+                        />
+                        <div>
+                            <p>{track.title}</p>
+                            <p className="">{track.artist.user.last_name}</p>
+                        </div>
+                    </>
+                    )
+                }
             </div>
             <div className="flex flex-col items-center gap-1 m-auto flex-1">
                 <div className="flex gap-4">

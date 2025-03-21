@@ -9,6 +9,7 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from "@/components/ui/resizable";
+
 const App = () => {
     const { audioRef, track } = useContext(PlayerContext);
     return (
@@ -32,7 +33,13 @@ const App = () => {
                 </ResizablePanelGroup>
             </div>
             <Player />
-            <audio ref={audioRef} src={track.file} preload="auto"></audio>
+            {track && (
+                <audio
+                    ref={audioRef}
+                    src={track.file_url}
+                    preload="auto"
+                ></audio>
+            )}
         </div>
     );
 };

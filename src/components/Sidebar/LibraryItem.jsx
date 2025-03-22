@@ -39,7 +39,9 @@ const LibraryItem = ({ item, isActive, onClick }) => {
 
     return (
         <div
-            className={`${isActive ? "bg-white/20" : ""} hover:bg-white/20 flex items-center gap-3 p-2 rounded-sm cursor-pointer transition-all duration-200 ease-in-out`}
+            className={`${
+                isActive ? "bg-zinc-700/30" : ""
+            } hover:bg-zinc-700/30 flex items-center gap-3 p-2 rounded-sm cursor-pointer transition-all duration-200 ease-in-out`}
             onClick={onClick}
         >
             <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0 bg-music-muted">

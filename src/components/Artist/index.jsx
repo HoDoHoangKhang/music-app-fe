@@ -5,18 +5,23 @@ import { HiCheckBadge } from "react-icons/hi2";
 import { FaPlay } from "react-icons/fa";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import SongItem from "../SongItem";
+import ArtistItem from "./ArtistItem";
 const Artist = () => {
     return (
         <div className="pb-4">
-            <div className="h-[40vh] relative overflow-hidden flex items-center ">
-                <img
-                    src="https://media-cdn-v2.laodong.vn/storage/newsportal/2024/10/19/1409990/Rhyder-7.jpg"
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover"
-                />
+            <div className="h-[40vh] relative overflow-hidden flex items-end ">
+                <div className="absolute inset-0">
+                    <img
+                        src="https://media-cdn-v2.laodong.vn/storage/newsportal/2024/10/19/1409990/Rhyder-7.jpg"
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover "
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black"></div>
+                </div>
+
                 <div className="absolute inset-0 bg-black/40"></div>
-                <div className="px-6 z-10">
-                    <div className="flex items-center">
+                <div className="px-6 z-10 mb-10">
+                    <div className="flex items-center mb-2">
                         <HiCheckBadge className="text-2xl text-[#73c3ff]" />
                         <p className="text-[12px]">Nghệ sĩ được xác minh</p>
                     </div>
@@ -25,7 +30,7 @@ const Artist = () => {
                 </div>
             </div>
             <div>
-                <div className="flex items-center py-6 px-6 gap-4">
+                <div className="flex items-center pb-3 px-5 gap-4 border-[rgb(39,39,42)] border-b-1 bg-black ">
                     <button className="bg-[#1ED760] p-4 text-l rounded-full text-[black] cursor-pointer">
                         <FaPlay></FaPlay>
                     </button>
@@ -38,11 +43,12 @@ const Artist = () => {
                 </div>
                 <div className="px-6">
                     <h1 className="my-5 font-bold text-2xl">Popular</h1>
+
                     {songsData.map((item, index) => (
                         <div
                             onClick={() => playWithId(item.id)}
                             key={item.id}
-                            className="grid grid-cols-3 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer"
+                            className="hover:bg-zinc-700/30 transition-colors  grid grid-cols-3 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] rounded-sm cursor-pointer"
                         >
                             <div className="text-white text-[14px] flex items-center">
                                 <b className="mr-4 text-[#a7a7a7]">
@@ -101,21 +107,8 @@ const Artist = () => {
                         </button>
                     </div>
                     <div className="flex overflow-auto over">
-                        <div className="min-w-[160px] hover:bg-white/10 p-2 rounded-sm cursor-pointer">
-                            <img
-                                src="https://th.bing.com/th/id/OIP.bnYhHEnCqJj9HrZmZUijrgHaE8?rs=1&pid=ImgDetMain"
-                                alt=""
-                                className="w-36 h-36 rounded-full object-cover mb-2"
-                            />
-                            <div>
-                                <p className="text-[12px] font-bold">
-                                    Huslang Robber
-                                </p>
-                                <p className="text-[10px] text-gray-100">
-                                    Nghệ sĩ
-                                </p>
-                            </div>
-                        </div>
+
+                    <ArtistItem/>
                     </div>
                 </div>
             </div>

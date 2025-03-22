@@ -13,7 +13,7 @@ const categories = [
 ];
 const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
     return (
-        <div className="sticky top-0 left-0 right-0 pl-4 pr-4 bg-black">
+        <div className="sticky top-0 left-0 right-0 pt-4 bg-[#121212]">
             <div className="flex items-center gap-2 mb-6">
                 <LuLibrary className="w-6 h-6 text-white" />
                 <span className="text-white font-bold">Your Library</span>
@@ -26,12 +26,12 @@ const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
                     </button>
                 </div>
             </div>
-            <div className="relative group">
+            <div className="relative group mb-3">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 group-hover:text-green-500 transition-colors" />
                 <input
                     type="text"
                     placeholder="Search chats"
-                    className="w-full bg-zinc-800/50 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all placeholder-zinc-500"
+                    className="text-white w-full bg-zinc-800/50 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all placeholder-zinc-500"
                 />
             </div>
             {/* Categories */}

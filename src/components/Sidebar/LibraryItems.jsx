@@ -86,7 +86,7 @@ const musicLibrary = [
 
 const LibraryItems = ({ activeItem, setActiveItem }) => {
     return (
-        <div className="px-2 flex-1 sidebar-scroll">
+        <div className="flex-1 sidebar-scroll">
             {musicLibrary.map((item) => (
                 <LibraryItem
                     key={item.id}

@@ -1,10 +1,8 @@
 import Navbar from "./Navbar";
-import { albumsData } from "../assets/assets";
-import AlbumItem from "./AlbumItem";
-import { songsData } from "../assets/assets";
-import SongItem from "./SongItem";
+import SongItem from "../SongItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Feature from "./Feature";
 
 const DisplayHome = () => {
     const [songs, setSongs] = useState([]);
@@ -39,7 +37,8 @@ const DisplayHome = () => {
         fetchSongs();
     }, []);
     return (
-        <div className="px-4 pt-1">
+        <div className="p-4">
+            <Feature />
             <Navbar />
             <div className="mb-4">
                 <div className="flex items-center justify-between">
@@ -50,12 +49,13 @@ const DisplayHome = () => {
                 </div>
                 <div className="flex overflow-auto">
                     {albums.map((album) => (
-                        <AlbumItem
+                        <SongItem
                             key={album.id}
                             name={album.title}
-                            desc={""}
+                            desc={"Album"}
                             id={album.id}
                             image={album.cover_image}
+                            onClick={() => playWithId(item.id)}
                         />
                     ))}
                 </div>
@@ -85,6 +85,7 @@ const DisplayHome = () => {
                                 desc={fullName}
                                 id={song.id}
                                 image={song.cover_image}
+                                onClick={() => playWithId(id)}
                             />
                         );
                     })}

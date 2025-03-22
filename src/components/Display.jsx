@@ -1,13 +1,15 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import DisplayHome from "./DisplayHome";
-import DisplayAlbum from "./DisplayAlbum";
+import DisplayHome from "./Home";
+import DisplayAlbum from "./Album";
 import Cart from "./Cart";
 import { useEffect, useRef } from "react";
 import { albumsData } from "../assets/assets";
-import Header from "./Header";
 import Artist from "./Artist";
-import Login from "./Ath/Login";
 import Chat from "./Chat";
+import Premium from "./Premium";
+import Liked from "./Liked";
+import ProfileSettings from "./ProfileSettings.jsx";
+import EditProfile from "./ProfileSettings.jsx/EditProfile.jsx";
 
 const Display = () => {
     const displayRef = useRef();
@@ -20,14 +22,13 @@ const Display = () => {
         if (isAlbum) {
             displayRef.current.style.background = `linear-gradient(${bgColor},#121212)`;
         } else {
-            displayRef.current.style.background =
-                "linear-gradient(#212121,#121212)";
+            displayRef.current.style.background = "#121212";
         }
     });
     return (
         <div
             ref={displayRef}
-            className="h-[100%] rounded bg-[#121212] text-white overflow-auto"
+            className="h-[100%] rounded bg-[#121212] text-white overflow-auto border border-zinc-800 "
         >
             <Routes>
                 <Route path="/" element={<DisplayHome />} />
@@ -35,6 +36,11 @@ const Display = () => {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/artist/:id" element={<Artist />} />
                 <Route path="/chat" element={<Chat />} />
+
+                <Route path="/premium" element={<Premium />} />
+                <Route path="/liked" element={<Liked />} />
+                <Route path="/profile-settings" element={<ProfileSettings />} />
+                <Route path="/edit-profile" element={<EditProfile />} />
             </Routes>
         </div>
     );

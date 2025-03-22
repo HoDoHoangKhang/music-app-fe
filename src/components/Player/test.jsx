@@ -5,8 +5,27 @@ import { PlayerContext } from "../context/PlayerContext";
 //Tippy
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css"; // optional
-
-const Player = () => {
+import {
+    FaHome,
+    FaSearch,
+    FaList,
+    FaCompactDisc,
+    FaBroadcastTower,
+    FaHeart,
+    FaPodcast,
+    FaChevronLeft,
+    FaChevronRight,
+    FaPlay,
+    FaRandom,
+    FaStepBackward,
+    FaStepForward,
+    FaRedo,
+    FaVolumeUp,
+    FaInstagram,
+    FaTwitter,
+    FaEllipsisH,
+} from "react-icons/fa";
+const Test= () => {
     const {
         seekBar,
         seekBg,
@@ -26,7 +45,7 @@ const Player = () => {
     text-white px-4"
         >
             <div className="hidden lg:flex items-center gap-4 w-[350px]">
-                { track && (
+                {track && (
                     <>
                         <img
                             className="w-12 rounded-full"
@@ -38,8 +57,7 @@ const Player = () => {
                             <p className="">{track.artist.user.last_name}</p>
                         </div>
                     </>
-                    )
-                }
+                )}
             </div>
             <div className="flex flex-col items-center gap-1 m-auto flex-1">
                 <div className="flex gap-4">
@@ -126,4 +144,4 @@ const Player = () => {
     );
 };
 
-export default Player;
+export default Test;

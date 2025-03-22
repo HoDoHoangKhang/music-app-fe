@@ -6,9 +6,10 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { IoLogoSlack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-
+import {
+    FaSearch,
+} from "react-icons/fa";
 //Tippy
-import Tippy from "@tippyjs/react";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Header = () => {
         navigate("/login");
     };
     return (
-        <div className="text-white h-[10%] flex px-4 justify-between">
+        <div className="text-white h-[10%] flex px-4 justify-between items-center">
             <div className="flex items-center gap-2">
                 <div
                     onClick={() => navigate("/")}
@@ -36,20 +37,19 @@ const Header = () => {
                     <GoHomeFill />
                 </button>
             </div>
-            <div className="flex-1 px-8">
-                <div className="relative max-w-md mx-auto">
-                    <input
-                        type="search"
-                        placeholder="Search songs, artists, or albums..."
-                        className="w-full bg-muted/50 pl-8 pr-4 py-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                </div>
+            <div className="relative group min-w-lg">
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 group-hover:text-green-500 transition-colors" />
+                <input
+                    type="text"
+                    placeholder="Search chats"
+                    className="text-white w-full bg-[#1f1f1f] rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all placeholder-zinc-500"
+                />
             </div>
             <div className="flex justify-between items-center font-semibold">
                 <div className="flex items-center gap-4">
-                    <div className="bg-white text-black rounded-full cursor-pointer px-3 py-1  border-[#ffffff26] flex items-center justify-center">
-                        Cart
-                    </div>
+                    <button className="px-4 py-1.5 text-sm font-semibold rounded-full bg-white cursor-pointer text-black hover:scale-105 transition-transform">
+                        Premium
+                    </button>
                     <Menu>
                         <MenuButton className="w-10 h-10 rounded-full bg-[#ffffff26] flex items-center justify-center">
                             <p className="w-8 h-8 bg-purple-500 text-black rounded-full flex items-center justify-center cursor-pointer">

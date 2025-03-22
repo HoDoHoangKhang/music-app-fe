@@ -1,15 +1,13 @@
 import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
-import { albumsData, assets, songsData } from "../assets/assets";
+import Navbar from "../Home/Navbar";
+import { albumsData, assets, songsData } from "../../assets/assets";
 import { useContext, useEffect, useState } from "react";
-import { PlayerContext } from "../context/PlayerContext";
+import { PlayerContext } from "../../context/PlayerContext";
 import axios from "axios";
 
 const DisplayAlbum = () => {
-    
-    
     const { id } = useParams(); // Lấy id từ URL
-    const [songs, setSongs] = useState([])
+    const [songs, setSongs] = useState([]);
     const [albumData, setAlbumData] = useState([]);
     useEffect(() => {
         const fetchSongs = async () => {

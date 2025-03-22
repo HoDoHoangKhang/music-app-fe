@@ -15,18 +15,18 @@ const App = () => {
     return (
         <div className="h-screen bg-black box-border text-[14px]">
             <Header />
-            <div className="h-[80%]">
+            <div className="h-[76%]">
                 <ResizablePanelGroup direction="horizontal">
                     <ResizablePanel
                         defaultSize={25}
-                        className="py-2 pl-2 pr-1 min-w-[250px]"
+                        className="pb-2 pl-2 pr-1 min-w-[250px]"
                     >
                         <Sidebar />
                     </ResizablePanel>
                     <ResizableHandle className="bg-[black]" />
                     <ResizablePanel
                         defaultSize={75}
-                        className="py-2 pr-2 pl-1 min-w-[400px]"
+                        className="pb-2 pr-2 pl-1 min-w-[400px]"
                     >
                         <Display />
                     </ResizablePanel>

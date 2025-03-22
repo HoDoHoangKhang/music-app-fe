@@ -1,19 +1,36 @@
 import { useContext } from "react";
 import { PlayerContext } from "../context/PlayerContext";
-
-const SongItem = ({ name, image, desc, id }) => {
+import { FaPlay } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+const SongItem = ({ name, image, desc, id, onClick }) => {
     const { playWithId } = useContext(PlayerContext);
-
+    const navigate = useNavigate();
     return (
         <div
-            onClick={() => playWithId(id)}
-            className="min-w-[180px] p-2 rounded cursor-pointer hover:bg-[#ffffff26] transition-all duration-200 ease-in-out"
+            onClick={onClick}
+            key={id}
+            className="rounded-sm p-3 hover:bg-zinc-700/30 transition-colors group cursor-pointer min-w-[180px] max-w-[180px]"
         >
-            <img className="rounded" src={image} alt="" />
-            <p onClick={() => {}} className="font-bold mt-2 mb-1">
-                {name}
+            <div className="relative">
+                <img
+                    src={image}
+                    alt="Album"
+                    className="w-full aspect-square object-cover rounded-sm mb-4"
+                />
+                <button className="absolute bottom-2 right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-xl">
+                    <FaPlay className="text-black text-sm cursor-pointer" />
+                </button>
+            </div>
+            <h3 className="font-semibold text-sm truncate ">{name}</h3>
+            <p
+                onClick={(e) => {
+                    e.stopPropagation(); // Ngăn sự kiện lan lên phần tử cha
+                    navigate(`/artist/${id}`);
+                }}
+                className="text-xs text-gray-400 truncate hover:underline"
+            >
+                {desc}
             </p>
-            <p className="text-slate-200 text-sm">{desc}</p>
         </div>
     );
 };

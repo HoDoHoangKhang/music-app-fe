@@ -22,6 +22,8 @@ import arrow_right from './right_arrow.png'
 import arrow_left from './left_arrow.png'
 import spotify_logo from './spotify_logo.png'
 import clock_icon from './clock_icon.png'
+import logo from "./logo.jpg";
+
 import img1 from './img1.jpg'
 import img2 from './img2.jpg'
 import img3 from './img3.jpg'
@@ -49,6 +51,7 @@ import song8 from "./song8.mp3";
 import song9 from "./song9.mp3";
 
 export const assets = {
+    logo,
     bell_icon,
     home_icon,
     like_icon,

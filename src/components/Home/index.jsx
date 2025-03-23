@@ -3,8 +3,13 @@ import SongItem from "../SongItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Feature from "./Feature";
+import { useContext } from "react";
+import { PlayerContext } from "../../context/PlayerContext";
+import { useNavigate } from "react-router-dom";
 
 const DisplayHome = () => {
+    const navigate = useNavigate();
+    const { playWithId } = useContext(PlayerContext);
     const [songs, setSongs] = useState([]);
     const [albums, setAlbums] = useState([]);
     useEffect(() => {
@@ -55,7 +60,7 @@ const DisplayHome = () => {
                             desc={"Album"}
                             id={album.id}
                             image={album.cover_image}
-                            onClick={() => playWithId(item.id)}
+                            onClick={() => navigate(`/album/${album.id}`)}
                         />
                     ))}
                 </div>
@@ -85,7 +90,7 @@ const DisplayHome = () => {
                                 desc={fullName}
                                 id={song.id}
                                 image={song.cover_image}
-                                onClick={() => playWithId(id)}
+                                onClick={() => playWithId(song.id)}
                             />
                         );
                     })}

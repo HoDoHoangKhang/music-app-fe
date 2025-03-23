@@ -10,13 +10,13 @@ const Premium = () => {
                     for free.
                 </h1>
                 <p className="text-sm md:text-base text-gray-200 mb-6">
-                    Only ₹119/month after. Cancel anytime.
+                    Only $119/month after. Cancel anytime.
                 </p>
                 <div className="flex flex-col md:flex-row gap-3 justify-center items-center mb-2">
-                    <button className="bg-white text-black font-semibold px-6 py-2 rounded-full hover:bg-gray-200 transition">
+                    <button className="cursor-pointer bg-white text-black font-semibold px-6 py-2 rounded-full hover:bg-gray-200 transition">
                         Get 3 months free
                     </button>
-                    <button className="border border-white text-white font-semibold px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
+                    <button className="cursor-pointer border border-white text-white font-semibold px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
                         See all plans
                     </button>
                 </div>
@@ -37,7 +37,7 @@ const Premium = () => {
                 <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
                     {/* Thay link icon thanh toán tùy ý */}
                     <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Visa_2014.svg"
+                        src="https://lubevan.ca/wp-content/uploads/2019/05/Download-Visa-Logo-PNG-Pic-1024x314.png"
                         alt="Visa"
                         className="h-6"
                     />
@@ -47,7 +47,7 @@ const Premium = () => {
                         className="h-6"
                     />
                     <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Google_Pay_Logo.svg"
+                        src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
                         alt="GPay"
                         className="h-6"
                     />
@@ -64,30 +64,34 @@ const Premium = () => {
                 <h3 className="text-xl font-bold mb-4">
                     All Premium plans include
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3 text-sm text-gray-100">
-                    <div className="flex items-start gap-2">
-                        <span className="text-green-400">✓</span>
-                        <span>Ad-free music listening</span>
+                <div className="text-sm text-gray-100">
+                    <div className="grid grid-cols-3">
+                        <div className="flex items-start gap-2">
+                            <span className="text-green-400">✓</span>
+                            <span>Ad-free music listening</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                            <span className="text-green-400">✓</span>
+                            <span>Download to listen offline</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                            <span className="text-green-400">✓</span>
+                            <span>Play songs in any order</span>
+                        </div>
                     </div>
-                    <div className="flex items-start gap-2">
-                        <span className="text-green-400">✓</span>
-                        <span>Download to listen offline</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                        <span className="text-green-400">✓</span>
-                        <span>Play songs in any order</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                        <span className="text-green-400">✓</span>
-                        <span>High-quality audio</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                        <span className="text-green-400">✓</span>
-                        <span>Cancel anytime</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                        <span className="text-green-400">✓</span>
-                        <span>Group Session</span>
+                    <div className="grid grid-cols-3">
+                        <div className="flex items-start gap-2">
+                            <span className="text-green-400">✓</span>
+                            <span>High-quality audio</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                            <span className="text-green-400">✓</span>
+                            <span>Cancel anytime</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                            <span className="text-green-400">✓</span>
+                            <span>Group Session</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -114,7 +118,7 @@ const Premium = () => {
                             music listening
                         </li>
                     </ul>
-                    <button className="bg-green-500 hover:bg-green-600 w-full mt-4 py-2 rounded font-semibold text-black transition">
+                    <button className="cursor-pointer bg-green-500 hover:bg-green-600 w-full mt-4 py-2 rounded font-semibold text-black transition">
                         Get Premium Mini
                     </button>
                 </div>
@@ -145,7 +149,7 @@ const Premium = () => {
                             in any order
                         </li>
                     </ul>
-                    <button className="bg-pink-400 hover:bg-pink-500 w-full mt-4 py-2 rounded font-semibold text-black transition">
+                    <button className="cursor-pointer bg-pink-400 hover:bg-pink-500 w-full mt-4 py-2 rounded font-semibold text-black transition">
                         Try 3 months free
                     </button>
                 </div>
@@ -173,7 +177,7 @@ const Premium = () => {
                             listen offline
                         </li>
                     </ul>
-                    <button className="bg-blue-400 hover:bg-blue-500 w-full mt-4 py-2 rounded font-semibold text-black transition">
+                    <button className="cursor-pointer bg-blue-400 hover:bg-blue-500 w-full mt-4 py-2 rounded font-semibold text-black transition">
                         Try 1 month free
                     </button>
                 </div>

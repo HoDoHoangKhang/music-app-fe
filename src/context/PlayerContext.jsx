@@ -8,6 +8,11 @@ const PlayerContextProvider = (props) => {
     const seekBg = useRef();
     const seekBar = useRef();
 
+    // =========== THÊM CHO VOLUME ============
+    const volumeBg = useRef();
+    const volumeBar = useRef();
+    const [volume, setVolume] = useState(0.5);
+
     const [songs, setSongs] = useState([]);
     const [track, setTrack] = useState(null);
     const [playStatus, setPlayStatus] = useState(false);
@@ -107,8 +112,29 @@ const PlayerContextProvider = (props) => {
                 });
             };
         }
-    }, [audioRef]);
+    }, [audioRef.current]);
+    
+    // Khi volume thay đổi, cập nhật audio
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = volume;
+        }
+        if (volumeBar.current) {
+            volumeBar.current.style.width = volume * 100 + "%";
+        }
+    }, [volume]);
 
+    // Hàm xử lý khi click vào thanh volume
+    const changeVolume = (e) => {
+        if (!volumeBg.current) return;
+        const rect = volumeBg.current.getBoundingClientRect();
+        const clickX = e.clientX - rect.left; // vị trí click so với thanh
+        let newVolume = clickX / rect.width;
+        // Giữ volume trong khoảng [0,1]
+        if (newVolume < 0) newVolume = 0;
+        if (newVolume > 1) newVolume = 1;
+        setVolume(newVolume);
+    };
     const contextValue = {
         audioRef,
         seekBg,
@@ -126,6 +152,12 @@ const PlayerContextProvider = (props) => {
         previous,
         next,
         seekSong,
+
+        volumeBg,
+        volumeBar,
+        volume,
+        setVolume,
+        changeVolume,
     };
 
     return (

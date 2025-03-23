@@ -1,14 +1,11 @@
 import React from "react";
 import { GoHomeFill } from "react-icons/go";
-import { assets } from "../assets/assets";
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 //icon
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { IoLogoSlack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import {
-    FaSearch,
-} from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 //Tippy
 
 const Header = () => {
@@ -26,9 +23,14 @@ const Header = () => {
             <div className="flex items-center gap-2">
                 <div
                     onClick={() => navigate("/")}
-                    className="p-[6px] text-2xl bg-pink-500/30 cursor-pointer text-pink-500 rounded-full"
+                    className="p-[6px] text-2xl cursor-pointer rounded-sm"
                 >
-                    <IoLogoSlack className=""></IoLogoSlack>
+                    {/* <IoLogoSlack className=""></IoLogoSlack> */}
+                    <img
+                        src="https://i.pinimg.com/736x/8d/5d/e0/8d5de0333bfe2a779fa7363753a0aba9.jpg"
+                        alt=""
+                        className="w-10 rounded-sm"
+                    />
                 </div>
                 <button
                     onClick={() => navigate("/")}
@@ -47,7 +49,10 @@ const Header = () => {
             </div>
             <div className="flex justify-between items-center font-semibold">
                 <div className="flex items-center gap-4">
-                    <button className="px-4 py-1.5 text-sm font-semibold rounded-full bg-white cursor-pointer text-black hover:scale-105 transition-transform">
+                    <button
+                        onClick={() => navigate("/premium")}
+                        className="px-4 py-1.5 text-sm font-semibold rounded-full bg-white cursor-pointer text-black hover:scale-105 transition-transform"
+                    >
                         Premium
                     </button>
                     <Menu>

@@ -6,10 +6,10 @@ import {
 } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 const categories = [
-    { id: "playlists", label: "Playlists", active: false },
-    { id: "artists", label: "Artists", active: true },
-    { id: "albums", label: "Albums", active: false },
-    { id: "podcasts", label: "Podcasts & Shows", active: false },
+    { id: "playlists", label: "Playlists"},
+    { id: "artists", label: "Artists"},
+    { id: "albums", label: "Albums"},
+    { id: "chat", label: "Chat"},
 ];
 const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
     return (
@@ -40,7 +40,11 @@ const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
                     <button
                         key={category.id}
                         onClick={() => setActiveCategory(category.id)}
-                        className="bg-white px-3 py-1 rounded-4xl"
+                        className={`px-3 py-1 rounded-4xl cursor-pointer ${
+                            activeCategory === category.id
+                                ? "bg-white text-black"
+                                : "bg-[#242424] text-white"
+                        }`}
                     >
                         {category.label}
                     </button>

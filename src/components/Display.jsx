@@ -39,7 +39,7 @@ const Display = () => {
 
                 <Route path="/premium" element={<Premium />} />
                 <Route path="/liked" element={<Liked />} />
-                <Route path="/profile-settings" element={<ProfileSettings />} />
+                <Route path="/profile" element={<ProfileSettings />} />
                 <Route path="/edit-profile" element={<EditProfile />} />
             </Routes>
         </div>

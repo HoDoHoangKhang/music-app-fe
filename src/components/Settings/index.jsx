@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 
-const ProfileSettings = () => {
+const Settings = () => {
     // Ví dụ state cho toggle cài đặt
     const [enableNotifications, setEnableNotifications] = useState(true);
     const [enableExplicitContent, setEnableExplicitContent] = useState(false);
@@ -188,4 +188,4 @@ const ProfileSettings = () => {
     );
 };
 
-export default ProfileSettings;
+export default Settings;

@@ -8,8 +8,8 @@ import Artist from "./Artist";
 import Chat from "./Chat";
 import Premium from "./Premium";
 import Liked from "./Liked";
-import ProfileSettings from "./ProfileSettings.jsx";
-import EditProfile from "./ProfileSettings.jsx/EditProfile.jsx";
+import Settings from "./Settings/index.jsx";
+import Profile from "./Settings/Profile.jsx";
 
 const Display = () => {
     const displayRef = useRef();
@@ -39,8 +39,8 @@ const Display = () => {
 
                 <Route path="/premium" element={<Premium />} />
                 <Route path="/liked" element={<Liked />} />
-                <Route path="/profile" element={<ProfileSettings />} />
-                <Route path="/edit-profile" element={<EditProfile />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     );

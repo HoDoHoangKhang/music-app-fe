@@ -35,9 +35,7 @@ import img8 from './img8.jpg'
 import img9 from './img9.jpg'
 import img10 from './img10.jpg'
 import img11 from './img11.jpg'
-import img12 from './img12.jpg'
 import img13 from './img13.jpg'
-import img14 from './img14.jpg'
 import img15 from './img15.jpg'
 import img16 from './img16.jpg'
 import song1 from  './song1.mp3'
@@ -48,7 +46,9 @@ import song5 from  './song5.mp3'
 import song6 from  './song6.mp3'
 import song7 from "./song7.mp3";
 import song8 from "./song8.mp3";
-import song9 from "./song9.mp3";
+
+import avtDefault from "./avt-default.jpg";
+
 
 export const assets = {
     logo,
@@ -75,8 +75,9 @@ export const assets = {
     arrow_left,
     arrow_right,
     spotify_logo,
-    clock_icon
-}
+    clock_icon,
+    avtDefault,
+};
 
 export const albumsData = [
     {   

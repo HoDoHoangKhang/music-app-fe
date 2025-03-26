@@ -1,5 +1,5 @@
 import React from "react";
-import { PlayerContext } from "../../context/PlayerContext";
+import { PlayerContext } from "../context/PlayerContext";
 import { useContext } from "react";
 
 import {

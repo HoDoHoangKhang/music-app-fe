@@ -1,12 +1,9 @@
 import { useParams } from "react-router-dom";
-import { albumsData, assets, songsData } from "../../assets/assets";
 import { useContext, useEffect, useState } from "react";
 import { PlayerContext } from "../../context/PlayerContext";
 import axios from "axios";
 import { FaEllipsisH } from "react-icons/fa";
-import { FaPlay } from "react-icons/fa6";
-import SongRow from "../Album/SongRow";
-import ArtistItem from "../Artist/ArtistItem";
+import ArtistItem from "../../components/ArtistItem";
 
 const Profile = () => {
     const { id } = useParams(); // Lấy id từ URL
@@ -27,7 +24,7 @@ const Profile = () => {
     }, []);
     const { playWithId } = useContext(PlayerContext);
     return (
-        <div className="py-4 flex flex-col h-full bg-gradient-to-b from-orange-700 to-transparent">
+        <div className="py-4 flex flex-col h-full bg-gradient-to-b from-[#bc5106] to-transparent">
             <div className="px-4 flex gap-8 flex-col md:flex-row md:items-end">
                 <img
                     className="w-48 rounded-full shadow-[0_4px_12px_0_#0000004d]"
@@ -35,7 +32,7 @@ const Profile = () => {
                     alt=""
                 />
                 <div className="flex flex-col">
-                    <p>Profile</p>
+                    <p className="font-bold">Profile</p>
                     <h2 className="text-5xl font-bold mb-4 md:text-7xl">
                         AJSASDHASD
                     </h2>
@@ -50,7 +47,6 @@ const Profile = () => {
                 <button className="hover:cursor-pointer px-5 py-5  rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
                     <FaEllipsisH className="text-xl" />
                 </button>
-
                 <div>
                     <div className="flex items-center justify-between">
                         <h1 className="my-5 font-bold text-2xl">
@@ -72,11 +68,25 @@ const Profile = () => {
                         <ArtistItem />
                         <ArtistItem />
                         <ArtistItem />
+                        <ArtistItem />
+                        <ArtistItem />
+                        <ArtistItem />
                     </div>
                 </div>
 
                 <div>
-                    <div className="mt-3">
+                    <div className="flex items-center justify-between">
+                        <h1 className="my-5 font-bold text-2xl">
+                            Top tracks this month
+                            <p className="text-white/50 text-sm font-medium">
+                                Only visible to you
+                            </p>
+                        </h1>
+                        <button className="font-bold hover:underline hover:cursor-pointer">
+                            Show all
+                        </button>
+                    </div>
+                    {/* <div className="mt-3">
                         {songs.map((item, index) => (
                             <SongRow
                                 key={index}
@@ -85,7 +95,7 @@ const Profile = () => {
                                 index={index}
                             />
                         ))}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GoHomeFill } from "react-icons/go";
+import {assets} from "../assets/assets"
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 //icon
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import {UserContext} from "../context/UserContext";
 //Tippy
 
 const Header = () => {
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem("user_id");
@@ -56,10 +59,12 @@ const Header = () => {
                         Premium
                     </button>
                     <Menu>
-                        <MenuButton className="w-10 h-10 rounded-full bg-[#ffffff26] flex items-center justify-center">
-                            <p className="w-8 h-8 bg-purple-500 text-black rounded-full flex items-center justify-center cursor-pointer">
-                                B
-                            </p>
+                        <MenuButton className="w-12 h-12 rounded-full bg-[#ffffff26] p-2 flex items-center justify-center cursor-pointer">
+                            <img
+                                className="aspect-square rounded-full object-fill"
+                                src={user?.avatar || assets.avtDefault}
+                                alt=""
+                            />
                         </MenuButton>
                         <MenuItems
                             anchor="bottom end"

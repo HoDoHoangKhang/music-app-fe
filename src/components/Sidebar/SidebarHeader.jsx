@@ -1,10 +1,14 @@
+// React
 import React from "react";
+
+//Component
+import Navbar from "../Navbar";
+
+// IconIcon
 import { LuLibrary } from "react-icons/lu";
 import { FaPlus } from "react-icons/fa6";
-import {
-    FaSearch,
-} from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
+import { FaSearch, FaArrowRight } from "react-icons/fa";
+
 const categories = [
     { id: "playlists", label: "Playlists"},
     { id: "artists", label: "Artists"},
@@ -35,21 +39,11 @@ const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
                 />
             </div>
             {/* Categories */}
-            <div className="flex flex-wrap gap-2 mb-4">
-                {categories.map((category) => (
-                    <button
-                        key={category.id}
-                        onClick={() => setActiveCategory(category.id)}
-                        className={`px-3 py-1 rounded-4xl cursor-pointer ${
-                            activeCategory === category.id
-                                ? "bg-white text-black"
-                                : "bg-[#242424] text-white"
-                        }`}
-                    >
-                        {category.label}
-                    </button>
-                ))}
-            </div>
+            <Navbar
+                categories={categories}
+                activeCategory={activeCategory}
+                setActiveCategory={setActiveCategory}
+            />
         </div>
     );
 };

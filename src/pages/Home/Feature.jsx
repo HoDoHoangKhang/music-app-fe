@@ -1,4 +1,7 @@
+// React
 import React from "react";
+
+// Icon
 import { FaPlay, FaInstagram, FaTwitter, FaEllipsisH } from "react-icons/fa";
 const Feature = () => {
     return (

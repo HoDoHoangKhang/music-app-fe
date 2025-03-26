@@ -1,15 +1,19 @@
-import { Route, Routes, useLocation } from "react-router-dom";
-import DisplayHome from "./Home";
-import DisplayAlbum from "./Album";
-import Cart from "./Cart";
+// React
 import { useEffect, useRef } from "react";
-import { albumsData } from "../assets/assets";
+import { Route, Routes, useLocation } from "react-router-dom";
+
+// Data
+import { albumsData } from "../assets/assets.js";
+
+// Component
+import Home from "./Home";
+import Album from "./Album";
 import Artist from "./Artist";
 import Chat from "./Chat";
 import Premium from "./Premium";
 import Liked from "./Liked";
-import Settings from "./Settings/index.jsx";
-import Profile from "./Settings/Profile.jsx";
+import Settings from "./Settings";
+import Profile from "./Profile";
 
 const Display = () => {
     const displayRef = useRef();
@@ -31,16 +35,15 @@ const Display = () => {
             className="h-[100%] rounded bg-[#121212] text-white overflow-auto border border-zinc-800 "
         >
             <Routes>
-                <Route path="/" element={<DisplayHome />} />
-                <Route path="/album/:id" element={<DisplayAlbum />} />
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/album/:id" element={<Album />} />
                 <Route path="/artist/:id" element={<Artist />} />
                 <Route path="/chat" element={<Chat />} />
 
                 <Route path="/premium" element={<Premium />} />
                 <Route path="/liked" element={<Liked />} />
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/:id" element={<Profile />} />
             </Routes>
         </div>
     );

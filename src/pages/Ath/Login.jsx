@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     useEffect(() => {
         const userId = localStorage.getItem("user_id");
@@ -29,13 +32,13 @@ const Login = () => {
             );
 
             const data = response.data;
-
             localStorage.setItem("user_id", data.user_id);
             localStorage.setItem("username", data.username);
             localStorage.setItem("role", data.role);
             localStorage.setItem("access_token", data.access_token);
             localStorage.setItem("refresh_token", data.refresh_token);
 
+            setUser(data);
             navigate("/");
         } catch (err) {
             setError(err.response?.data?.error || "Đăng nhập thất bại");

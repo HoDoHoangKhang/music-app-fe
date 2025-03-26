@@ -1,10 +1,16 @@
-import { FaPlay } from "react-icons/fa";
+// React
 import { useNavigate } from "react-router-dom";
-import { Menu, Item, useContextMenu } from "react-contexify";
+
+// Libary
 import "react-contexify/dist/ReactContexify.css";
+import { Menu, Item, useContextMenu } from "react-contexify";
+
+// icon
+import { FaPlay } from "react-icons/fa";
 import { FiPlusCircle } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
+
 const MENU_ID = "context-menu";
 
 const SongItem = ({ name, image, desc, id, onClick }) => {
@@ -31,10 +37,14 @@ const SongItem = ({ name, image, desc, id, onClick }) => {
             <h3 className="font-semibold text-sm truncate">{name}</h3>
             <p
                 onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/artist/${id}`);
+                    if (desc !== "Album") {
+                        e.stopPropagation();
+                        navigate(`/artist/${id}`);
+                    }
                 }}
-                className="text-xs text-gray-400 truncate hover:underline"
+                className={`text-xs text-gray-400 truncate ${
+                    desc !== "Album" ? "hover:underline cursor-pointer" : ""
+                }`}
             >
                 {desc}
             </p>

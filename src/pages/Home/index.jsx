@@ -1,15 +1,14 @@
 // React
 import { useEffect, useState } from "react";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Component
 import Navbar from "../../components/Navbar";
 import SongItem from "../../components/SongItem";
 import Feature from "./Feature";
-import { PlayerContext } from "../../context/PlayerContext";
 import Title from "../../components/Title";
 import { getAlbums, getSongs } from "../../api/musicService";
+import AlbumItem from "../../components/AlbumItem";
 
 const categories = [
     { id: "all", label: "All" },
@@ -19,7 +18,6 @@ const categories = [
 
 const Home = () => {
     const navigate = useNavigate();
-    const { playWithId } = useContext(PlayerContext);
     const [songs, setSongs] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [activeCategory, setActiveCategory] = useState("all");
@@ -51,13 +49,11 @@ const Home = () => {
                 />
                 <div className="flex overflow-auto">
                     {albums.map((album) => (
-                        <SongItem
+                        <AlbumItem
                             key={album.id}
                             name={album.title}
-                            desc={"Album"}
                             id={album.id}
                             image={album.cover_image}
-                            onClick={() => navigate(`/album/${album.id}`)}
                         />
                     ))}
                 </div>
@@ -81,9 +77,9 @@ const Home = () => {
                                 key={song.id}
                                 name={song.title}
                                 desc={fullName}
-                                id={song.artist.id}
+                                idSong={song.id}
+                                idArtist={song.artist.id}
                                 image={song.cover_image}
-                                onClick={() => playWithId(song.id)}
                             />
                         );
                     })}

@@ -46,8 +46,8 @@ const ArtistDetail = ({ backropImage, name, id }) => {
                 </button>
                 <button
                     onClick={() => {
-                     setIsFollow(!isFollow);
-                     toggleFollow(id);   
+                        setIsFollow(!isFollow);
+                        toggleFollow(id);
                     }}
                     className="border-[1px] rounded-full px-3 py-1 font-bold text-[12px] cursor-pointer"
                 >

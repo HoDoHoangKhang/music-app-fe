@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 //component
-import SongItem from "../../components/SongItem";
+import AlbumItem from "../../components/AlbumItem";
 import ArtistItem from "../../components/ArtistItem";
 import ArtistDetail from "./ArtistDetail";
 import Title from "../../components/Title";
@@ -28,17 +28,13 @@ const Artist = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const [
-                songsData,
-                albumsData,
-                artistsData,
-                artistDetailData,
-            ] = await Promise.all([
-                getSongsFromArtist(id),
-                getAlbumsFromArtist(id),
-                getArtists(),
-                getArtistDetail(id),
-            ]);
+            const [songsData, albumsData, artistsData, artistDetailData] =
+                await Promise.all([
+                    getSongsFromArtist(id),
+                    getAlbumsFromArtist(id),
+                    getArtists(),
+                    getArtistDetail(id),
+                ]);
             setSongs(songsData);
             setAlbunms(albumsData);
             setArtists(artistsData);
@@ -81,13 +77,11 @@ const Artist = () => {
                     <Title title={"Albums"} onClick={() => navigate(`/`)} />
                     <div className="flex overflow-auto over">
                         {albums.map((item) => (
-                            <SongItem
+                            <AlbumItem
                                 key={item.id}
                                 name={item.title}
-                                desc={"Album"}
                                 id={item.id}
                                 image={`http://127.0.0.1:8000${item.cover_image}`}
-                                onClick={() => navigate(`/album/${item.id}`)}
                             />
                         ))}
                     </div>

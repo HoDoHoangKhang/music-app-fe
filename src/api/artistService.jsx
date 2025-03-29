@@ -45,39 +45,61 @@ export const getArtistDetail = async (id) => {
     }
 };
 
-const refreshAccessToken = async () => {
+const refreshToken = async () => {
     try {
-        const refreshToken = localStorage.getItem("refresh_token");
-        if (!refreshToken) {
-            console.error("No refresh token found");
-            return null;
-        }
-
-        const response = await axios.post(`${API_BASE_URL}/auth/refresh/`, {
-            refresh: refreshToken,
-        });
-
-        const newAccessToken = response.data.access;
-        localStorage.setItem("access_token", newAccessToken);
-        return newAccessToken;
+        const response = await axios.post(
+            "http://127.0.0.1:8000/api/token/refresh/",
+            {
+                refresh: localStorage.getItem("refresh_token"),
+            }
+        );
+        localStorage.setItem("access_token", response.data.access);
+        return response.data.access;
     } catch (error) {
         console.error("Error refreshing token:", error);
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        window.location.href = "/login"; // Chuyển hướng về trang đăng nhập
         return null;
     }
 };
-export const getFollowStatus = async (id) => {
-    if (id) {
+
+const withAuth = async (callback) => {
+    let token = localStorage.getItem("access_token");
+    if (!token) {
+        console.log("Access token không tồn tại, thử refresh...");
+        token = await refreshToken();
+    }
+    if (token) {
+        console.log("Token hợp lệ: ", token);
         try {
-            const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
-            console.log(token);
+            return await callback(token);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.error("Token không hợp lệ, thử refresh lại...");
+                token = await refreshToken();
+                if (token) {
+                    console.log("Token mới hợp lệ: ", token);
+                    return await callback(token);
+                }
+            }
+            console.error("Lỗi khi thực hiện callback:", error);
+            return null;
+        }
+    } else {
+        console.error("Không thể refresh token");
+        return null;
+    }
+};
+
+export const getFollowStatus = async (id) => {
+    if (!id) {
+        return null;
+    }
+    return withAuth(async (token) => {
+        try {
             const response = await axios.get(
                 `${API_BASE_URL}/artists/${id}/follow-status/`,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Thêm token vào headers
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
@@ -86,27 +108,25 @@ export const getFollowStatus = async (id) => {
             console.error("Error fetching follow status:", error);
             return null;
         }
-    }
+    });
 };
 
 export const toggleFollow = async (id) => {
-    try {
-        const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
-        console.log(token);
-
-        const response = await axios.post(
-            `${API_BASE_URL}/artists/${id}/follow-toggle/`,
-            {}, // Không có payload, phải truyền object rỗng
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`, // Thêm token vào headers
-                },
-            }
-        );
-
-        return response.data.isFollowing;
-    } catch (error) {
-        console.error("Error toggling follow status:", error);
-        return null;
-    }
+    return withAuth(async (token) => {
+        try {
+            const response = await axios.post(
+                `${API_BASE_URL}/artists/${id}/follow-toggle/`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            return response.data.isFollowing;
+        } catch (error) {
+            console.error("Error toggling follow status:", error);
+            return null;
+        }
+    });
 };

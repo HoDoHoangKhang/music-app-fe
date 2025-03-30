@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 
 // Library
 import "react-contexify/dist/ReactContexify.css";
-import { Menu, Item, useContextMenu } from "react-contexify";
+import { Menu, Item, Submenu, useContextMenu } from "react-contexify";
 
 // Component
 import { PlayerContext } from "../context/PlayerContext";
@@ -14,9 +14,10 @@ import { FiPlusCircle } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa";
+import { MdPlaylistAdd } from "react-icons/md";
 
 //api
-import { checkSongLikeStatus } from "../api/musicService";
+import { checkSongLikeStatus, toggleSongLike } from "../api/musicService";
 
 const SongItem = ({ name, image, desc, idSong, idArtist }) => {
     const navigate = useNavigate();
@@ -25,6 +26,12 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
     const { show } = useContextMenu({ id: menuId });
     const [isLikeSong, setIsLikeSong] = useState(false);
     const { playWithId } = useContext(PlayerContext);
+    const [playlists, setPlaylists] = useState([
+        { id: 1, name: "Nhạc Yêu Thích" },
+        { id: 2, name: "Playlist của tôi" },
+        { id: 3, name: "Nhạc Chill" },
+        { id: 4, name: "Workout Music" },
+    ]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +40,12 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
         };
         fetchData();
     }, [idSong]);
-    console.log(`${idSong}  ${isLikeSong} `);
+
+    const handleAddToPlaylist = (playlistId) => {
+        console.log(`Adding song ${idSong} to playlist ${playlistId}`);
+        // Thêm logic thêm bài hát vào playlist ở đây
+    };
+
     return (
         <div
             onClick={() => playWithId(idSong)}
@@ -72,6 +84,7 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
                 <Item
                     onClick={() => {
                         setIsLikeSong(!isLikeSong);
+                        toggleSongLike(idSong);
                     }}
                 >
                     {isLikeSong ? (
@@ -86,14 +99,32 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
                         </div>
                     )}
                 </Item>
-                <Item
-                    onClick={() =>
-                        console.log(`Add song ${idSong} to playlist`)
+                <Submenu
+                    label={
+                        <div className="flex items-center">
+                            <FiPlusCircle className="text-lg" />
+                            <p className="ml-2">Add to Playlist</p>
+                        </div>
                     }
                 >
-                    <FiPlusCircle className="text-lg" />
-                    <p className="ml-2">Add to Playlist</p>
-                </Item>
+                    <Item onClick={() => navigate("/create-playlist")}>
+                        <div className="flex items-center">
+                            <FiPlusCircle className="text-lg" />
+                            <p className="ml-2">Tạo playlist mới</p>
+                        </div>
+                    </Item>
+                    {playlists.map((playlist) => (
+                        <Item
+                            key={playlist.id}
+                            onClick={() => handleAddToPlaylist(playlist.id)}
+                        >
+                            <div className="flex items-center">
+                                <MdPlaylistAdd className="text-lg" />
+                                <p className="ml-2">{playlist.name}</p>
+                            </div>
+                        </Item>
+                    ))}
+                </Submenu>
                 <Item onClick={() => navigate(`/artist/${idArtist}`)}>
                     <RiUserLine className="text-lg" />
                     <p className="ml-2">Go to Artist</p>

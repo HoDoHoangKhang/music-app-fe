@@ -1,19 +1,21 @@
 // React
-import React from "react";
+import React, { useState } from "react";
 
 //Component
 import Navbar from "../Navbar";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 // IconIcon
 import { LuLibrary } from "react-icons/lu";
-import { FaPlus } from "react-icons/fa6";
-import { FaSearch, FaArrowRight } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { Plus } from "lucide-react";
+import { PiMusicNotesPlus } from "react-icons/pi";
 
 const categories = [
-    { id: "playlists", label: "Playlists"},
-    { id: "artists", label: "Artists"},
-    { id: "albums", label: "Albums"},
-    { id: "chat", label: "Chat"},
+    { id: "playlists", label: "Playlists" },
+    { id: "artists", label: "Artists" },
+    { id: "albums", label: "Albums" },
+    { id: "chat", label: "Chat" },
 ];
 const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
     return (
@@ -22,12 +24,42 @@ const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
                 <LuLibrary className="w-6 h-6 text-white" />
                 <span className="text-white font-bold">Your Library</span>
                 <div className="ml-auto flex gap-2">
-                    <button className="w-8 h-8 flex items-center justify-center rounded-full bg-music-btn-bg text-white hover:bg-music-highlight transition-colors">
-                        <FaPlus className="w-5 h-5" />
-                    </button>
-                    <button className="w-8 h-8 flex items-center justify-center rounded-full bg-music-btn-bg text-white hover:bg-music-highlight transition-colors">
-                        <FaArrowRight className="w-5 h-5" />
-                    </button>
+                    <Menu>
+                        <MenuButton className="cursor-pointer flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 rounded-full transition-colors">
+                            <Plus size={20} />
+                            <span className="font-medium">Create</span>
+                        </MenuButton>
+                        <MenuItems
+                            anchor="bottom start"
+                            className={
+                                " text-white p-1 rounded-sm bg-[#1F1F1F] z-999"
+                            }
+                        >
+                            <MenuItem
+                                onClick={() => {
+                            
+                                }}
+                                className="flex items-center p-3  hover:bg-zinc-800 cursor-pointer group rounded-sm"
+                            >
+                                <div>
+                                    <div className="p-3 rounded-full flex items-center justify-center mr-3 bg-[#3e3e3e]">
+                                        <PiMusicNotesPlus
+                                            size={30}
+                                            className="text-white group-hover:text-[#1ed760] transition-all group-hover:rotate-4"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p className="text-white font-medium">
+                                            Playlist
+                                        </p>
+                                        <p className="text-gray-400 text-sm">
+                                            Build a playlist with songs
+                                        </p>
+                                    </div>
+                                </div>
+                            </MenuItem>
+                        </MenuItems>
+                    </Menu>
                 </div>
             </div>
             <div className="relative group mb-3">

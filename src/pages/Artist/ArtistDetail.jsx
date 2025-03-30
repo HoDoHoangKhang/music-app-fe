@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { HiCheckBadge } from "react-icons/hi2";
 import { FaPlay } from "react-icons/fa";
-import { getFollowStatus, toggleFollow } from "../../api/artistService";
+import { getFollowStatus, toggleFollow } from "../../api/userService";
 
 const ArtistDetail = ({ backropImage, name, id }) => {
     const [isFollow, setIsFollow] = useState(false);

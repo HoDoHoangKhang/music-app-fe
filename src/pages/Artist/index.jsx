@@ -14,7 +14,7 @@ import {
     getArtists,
     getFollowStatus,
     getSongsFromArtist,
-} from "../../api/artistService";
+} from "../../api/userService";
 import { formatFullName } from "../../utils/format";
 
 const Artist = () => {

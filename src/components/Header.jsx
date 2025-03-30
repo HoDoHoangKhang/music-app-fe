@@ -8,7 +8,6 @@ import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import {UserContext} from "../context/UserContext";
-//Tippy
 
 const Header = () => {
     const { user } = useContext(UserContext);
@@ -69,7 +68,7 @@ const Header = () => {
                         <MenuItems
                             anchor="bottom end"
                             className={
-                                "bg-[#282828] text-white p-1 w-[190px] rounded-sm"
+                                "bg-[#282828] text-white p-1 w-[190px] rounded-sm z-999"
                             }
                         >
                             <MenuItem>
@@ -92,7 +91,7 @@ const Header = () => {
                             <MenuItem>
                                 <button
                                     onClick={handleLogout}
-                                    className="block rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
+                                    className="block w-[100%] text-start cursor-po rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
                                 >
                                     Logout
                                 </button>

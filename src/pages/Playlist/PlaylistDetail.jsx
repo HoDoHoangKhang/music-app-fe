@@ -1,6 +1,6 @@
 import React from "react";
 
-const AlbumDetail = ({coverImage,
+const PlaylistDetail = ({coverImage,
     title,
     artistName,
     totalSongs,
@@ -12,11 +12,11 @@ const AlbumDetail = ({coverImage,
             <div className="px-4 flex gap-8 flex-col md:flex-row md:items-end">
                 <img
                     className="w-48 h-48 rounded shadow-[0_4px_12px_0_#0000004d] object-cover"
-                    src={coverImage}
+                    src={`http://127.0.0.1:8000/${coverImage}`}
                     alt=""
                 />
                 <div className="flex flex-col">
-                    <p className="font-medium">Album</p>
+                    <p className="font-medium">Playlist</p>
                     <h2 className="text-5xl font-bold mb-4 md:text-7xl">
                         {title}
                     </h2>
@@ -41,4 +41,4 @@ const AlbumDetail = ({coverImage,
         );
 };
 
-export default AlbumDetail;
+export default PlaylistDetail;

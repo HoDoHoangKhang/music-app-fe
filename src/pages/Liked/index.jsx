@@ -1,52 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Cài đặt react-icons nếu cần: npm install react-icons
 import { FaHeart } from "react-icons/fa";
 
-const Liked = () => {
-    // Giả lập danh sách bài hát đã thích
-    const likedSongs = [
-        {
-            id: 1,
-            title: "Song Title 1",
-            artist: "Artist 1",
-            album: "Album 1",
-            dateAdded: "2023-01-10",
-            duration: "3:45",
-        },
-        {
-            id: 2,
-            title: "Song Title 2",
-            artist: "Artist 2",
-            album: "Album 2",
-            dateAdded: "2023-01-12",
-            duration: "4:12",
-        },
-        {
-            id: 3,
-            title: "Song Title 3",
-            artist: "Artist 3",
-            album: "Album 3",
-            dateAdded: "2023-02-05",
-            duration: "2:58",
-        },
-        {
-            id: 4,
-            title: "Song Title 4",
-            artist: "Artist 4",
-            album: "Album 4",
-            dateAdded: "2023-02-14",
-            duration: "3:50",
-        },
-        {
-            id: 5,
-            title: "Song Title 5",
-            artist: "Artist 5",
-            album: "Album 5",
-            dateAdded: "2023-03-01",
-            duration: "4:05",
-        },
-    ];
+import { FaPlay } from "react-icons/fa6";
+import { FaEllipsisH } from "react-icons/fa";
+import { LuClock3 } from "react-icons/lu";
+import SongRow from "../../components/SongRow";
 
+const Liked = () => {
+    // const [likedSongs, setLikedSongs] = useState([]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const [likedSongsData] = await Promise.all([getLikedSongs()]);
+    //         setLikedSongs(likedSongsData);
+    //     };
+    //     fetchData();
+    // }, []);
     return (
         <div className="min-h-screen bg-[#121212] text-white">
             {/* Header */}
@@ -70,53 +39,34 @@ const Liked = () => {
             </div>
 
             {/* Bảng danh sách bài hát */}
-            <div className="px-4 md:px-8 py-6">
-                <table className="w-full text-left border-separate [border-spacing:0]">
-                    <thead className="text-gray-400 border-b border-gray-700 text-sm uppercase tracking-wider">
-                        <tr>
-                            <th className="pl-2 pb-3 hidden md:table-cell w-8">
-                                #
-                            </th>
-                            <th className="pb-3">Title</th>
-                            <th className="pb-3 hidden md:table-cell">Album</th>
-                            <th className="pb-3 hidden lg:table-cell">
-                                Date added
-                            </th>
-                            <th className="pb-3 pr-2 text-right">Duration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {likedSongs.map((song, index) => (
-                            <tr
-                                key={song.id}
-                                className="group text-sm hover:bg-[#2a2a2a] transition-colors"
-                            >
-                                <td className="pl-2 py-3 hidden md:table-cell align-middle text-gray-400 w-8">
-                                    {index + 1}
-                                </td>
-                                <td className="py-3 flex flex-col md:flex-row md:items-center gap-2">
-                                    {/* Nếu có ảnh bìa cho mỗi bài hát, bạn có thể thêm ở đây */}
-                                    <span className="font-semibold">
-                                        {song.title}
-                                    </span>
-                                    <span className="text-gray-400 text-xs md:text-sm">
-                                        {song.artist}
-                                    </span>
-                                </td>
-                                <td className="py-3 hidden md:table-cell align-middle text-gray-400">
-                                    {song.album}
-                                </td>
-                                <td className="py-3 hidden lg:table-cell align-middle text-gray-400">
-                                    {song.dateAdded}
-                                </td>
-                                <td className="py-3 pr-2 align-middle text-right text-gray-400">
-                                    {song.duration}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            {/* <div className="bg-zinc-900/50 px-4 pt-8 mt-4 flex-[1] ">
+                <div className="flex gap-2">
+                    <button className="hover:cursor-pointer px-5 py-5 bg-green-500 rounded-full hover:bg-green-400 transition-colors flex items-center space-x-2">
+                        <FaPlay className="text-black text-xl" />
+                    </button>
+                    <button className="hover:cursor-pointer px-5 py-5  rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <FaEllipsisH className="text-xl" />
+                    </button>
+                </div>
+                <div className="grid grid-cols-[16px_minmax(120px,6fr)_minmax(120px,4fr)_minmax(120px,3fr)_minmax(120px,1fr)] gap-2 mt-6 pb-2 p-2 text-[#a7a7a7] font-medium border-b-1 border-[#a4a4a4]">
+                    <p>#</p>
+                    <p>Title</p>
+                    <p>Album</p>
+                    <p className="hidden sm:block">Date Added</p>
+                    <LuClock3 className="m-auto text-[18px]" />
+                </div>
+                <div className="mt-3">
+                    {likedSongs.map((item, index) => (
+                        <SongRow
+                            key={index}
+                            song={item}
+                            albumTitle={"test"}
+                            albumReleaseDate={"test"}
+                            index={index}
+                        />
+                    ))}
+                </div>
+            </div> */}
         </div>
     );
 };

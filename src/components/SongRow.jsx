@@ -20,7 +20,7 @@ const SongRow = ({ song, albumTitle, albumReleaseDate, index }) => {
                 <div className="inline-block">
                     <div>{song.title}</div>
                     <div className="text-[#a7a7a7] text-[14px]">
-                        {song.artist.user.last_name.slice(0, 20)}
+                        {song.artist?.user?.last_name?.slice(0, 20)}
                     </div>
                 </div>
             </div>

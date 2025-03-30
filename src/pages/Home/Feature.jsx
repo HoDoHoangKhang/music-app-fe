@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { FaPlay, FaInstagram, FaTwitter, FaEllipsisH } from "react-icons/fa";
-import { getArtists } from "../../api/artistService";
+import { getArtists } from "../../api/userService";
 
 
 const Feature = () => {

@@ -1,10 +1,11 @@
-import axios from "axios";
+import { createApiInstance } from "./authService";
 
 const API_BASE_URL = "http://127.0.0.1:8000/api/music";
+const api = createApiInstance(API_BASE_URL);
 
 export const getAlbums = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/albums/`);
+        const response = await api.get(`/albums/`);
         return response.data;
     } catch (error) {
         console.error("Error fetching albums:", error);
@@ -14,7 +15,7 @@ export const getAlbums = async () => {
 
 export const getSongs = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/songs/`);
+        const response = await api.get(`/songs/`);
         return response.data;
     } catch (error) {
         console.error("Error fetching songs:", error);
@@ -24,16 +25,17 @@ export const getSongs = async () => {
 
 export const getSongsFromAlbum = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/albums/${id}/songs/`);
+        const response = await api.get(`/albums/${id}/songs/`);
         return response.data;
     } catch (error) {
         console.error("Error fetching songs from album:", error);
         return [];
     }
 };
+
 export const getAlbumFromId = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/albums/${id}/`);
+        const response = await api.get(`/albums/${id}/`);
         return response.data;
     } catch (error) {
         console.error("Error fetching album from id:", error);
@@ -41,116 +43,69 @@ export const getAlbumFromId = async (id) => {
     }
 };
 
-const refreshToken = async () => {
+// Toggle like/unlike cho bài hát
+export const toggleSongLike = async (songId) => {
     try {
-        const refreshTokenValue = localStorage.getItem("refresh_token");
-
-        if (!refreshTokenValue) {
-            console.error("Không tìm thấy refresh token");
-            return null;
-        }
-
-        const response = await axios.post(
-            "http://127.0.0.1:8000/api/token/refresh/",
-            {
-                refresh: refreshTokenValue,
-            }
-        );
-
-        if (response.data && response.data.access) {
-            localStorage.setItem("access_token", response.data.access);
-            console.log("Token mới đã được lưu trữ");
-            return response.data.access;
-        } else {
-            console.error(
-                "Phản hồi refresh token không hợp lệ:",
-                response.data
-            );
-            return null;
-        }
+        const response = await api.post(`/songs/${songId}/like-toggle/`);
+        console.log(`${songId} ${response.data}`);
+        return response.data;
     } catch (error) {
-        console.error("Lỗi khi refresh token:", error);
-        // Nếu refresh token đã hết hạn, xóa token để người dùng đăng nhập lại
-        if (
-            error.response &&
-            (error.response.status === 401 || error.response.status === 400)
-        ) {
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("refresh_token");
-            console.error("Refresh token đã hết hạn, cần đăng nhập lại");
-        }
+        console.error("Error toggling song like:", error);
         return null;
     }
 };
 
-const withAuth = async (callback) => {
+// Toggle like/unlike cho album
+export const toggleAlbumLike = async (albumId) => {
     try {
-        // Lấy token từ localStorage
-        let token = localStorage.getItem("access_token");
-
-        // Nếu không có token, thử refresh
-        if (!token) {
-            console.log("Access token không tồn tại, thử refresh...");
-            token = await refreshToken();
-            if (!token) {
-                console.error("Không thể refresh token");
-                // Có thể chuyển hướng về trang đăng nhập ở đây
-                return null;
-            }
-        }
-
-        console.log("Sử dụng token: ", token);
-
-        try {
-            // Thử thực hiện yêu cầu với token hiện tại
-            return await callback(token);
-        } catch (error) {
-            // Nếu gặp lỗi 401, thử refresh token và gọi lại
-            if (error.response && error.response.status === 401) {
-                console.log("Token hết hạn, đang refresh...");
-                token = await refreshToken();
-
-                if (token) {
-                    console.log(
-                        "Đã refresh token thành công, thử lại yêu cầu..."
-                    );
-                    // Thử lại yêu cầu với token mới
-                    return await callback(token);
-                } else {
-                    console.error("Refresh token thất bại, cần đăng nhập lại");
-                    // Xóa các token hiện tại vì đã không còn hợp lệ
-                    localStorage.removeItem("access_token");
-                    localStorage.removeItem("refresh_token");
-                    // Có thể thêm mã chuyển hướng về trang đăng nhập
-                    return null;
-                }
-            } else {
-                // Xử lý các lỗi khác không phải 401
-                console.error("Lỗi khi thực hiện yêu cầu:", error);
-                throw error;
-            }
-        }
+        const response = await api.post(`/albums/${albumId}/like-toggle/`);
+        return response.data;
     } catch (error) {
-        console.error("Lỗi trong withAuth:", error);
+        console.error("Error toggling album like:", error);
         return null;
     }
 };
 
+// Kiểm tra trạng thái like của bài hát
 export const checkSongLikeStatus = async (songId) => {
-    return withAuth(async (token) => {
-        try {
-            const response = await axios.get(
-                `${API_BASE_URL}/likes/check/${songId}/`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            return response.data.liked;
-        } catch (error) {
-            console.error("Error checking like status:", error);
-            return false;
-        }
-    });
+    try {
+        const response = await api.get(`/likes/check/song/${songId}/`);
+        return response.data.liked;
+    } catch (error) {
+        console.error("Error checking song like status:", error);
+        return false;
+    }
+};
+
+// Kiểm tra trạng thái like của album
+export const checkAlbumLikeStatus = async (albumId) => {
+    try {
+        const response = await api.get(`/likes/check/album/${albumId}/`);
+        return response.data.liked;
+    } catch (error) {
+        console.error("Error checking album like status:", error);
+        return false;
+    }
+};
+
+// Lấy toàn bộ playlists của user
+export const getUserPlaylist = async () => {
+    try {
+        const response = await api.get(`/my-playlists/`);
+        return response.data;
+    } catch (error) {
+        console.error("Error get user playlist:", error);
+        return false;
+    }
+};
+
+// Lấy 1 playlist của user
+export const getUserPlaylistDetail = async (playlistId) => {
+    try {
+        const response = await api.get(`/my-playlists/${playlistId}/`);
+        return response.data;
+    } catch (error) {
+        console.error("Error get user playlist detail:", error);
+        return false;
+    }
 };

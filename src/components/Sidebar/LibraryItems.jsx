@@ -83,7 +83,6 @@ const musicLibrary = [
     },
 ];
 
-
 const LibraryItems = ({ activeItem, setActiveItem }) => {
     return (
         <div className="flex-1 sidebar-scroll">

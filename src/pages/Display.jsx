@@ -14,6 +14,7 @@ import Premium from "./Premium";
 import Liked from "./Liked";
 import Settings from "./Settings";
 import Profile from "./Profile";
+import Playlist from "./Playlist/index.jsx";
 
 const Display = () => {
     const displayRef = useRef();
@@ -44,6 +45,7 @@ const Display = () => {
                 <Route path="/liked" element={<Liked />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/playlist/:id" element={<Playlist />} />
             </Routes>
         </div>
     );

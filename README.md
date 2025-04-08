@@ -34,9 +34,7 @@
 
 ## ✨ Overview
 
-**music_app_fe** is a powerful front-end framework designed to streamline the development of dynamic music applications using modern React architecture. 
-
-**Why music_app_fe?**
+**Music App Frontend** is a powerful front-end framework designed to streamline the development of dynamic music applications using modern React architecture. 
 
 This project aims to enhance user engagement and simplify the development process. The core features include:
 
@@ -50,20 +48,18 @@ This project aims to enhance user engagement and simplify the development proces
 ---
 
 ## 📌 Features
-
-|      | Component       | Details                              |
-| :--- | :-------------- | :----------------------------------- |
-| ⚙️  | **Architecture**  | <ul><li>Component-based architecture using React</li><li>Utilizes TypeScript for type safety</li><li>Vite as the build tool for fast development</li></ul> |
-| 🔩 | **Code Quality**  | <ul><li>ESLint for linting JavaScript and TypeScript code</li><li>Pre-configured ESLint plugins for React</li><li>Type definitions provided by `@types/react` and `@types/react-dom`</li></ul> |
-| 📄 | **Documentation** | <ul><li>Package.json includes scripts for development and production</li><li>TypeScript configuration in `tsconfig.json`</li><li>Component documentation can be inferred from `components.json`</li></ul> |
-| 🔌 | **Integrations**  | <ul><li>Axios for HTTP requests</li><li>React Router for navigation</li><li>Tailwind CSS for styling</li><li>Swiper for carousel functionality</li></ul> |
-| 🧩 | **Modularity**    | <ul><li>Components are modular and reusable</li><li>Separation of concerns with CSS and JS files</li><li>Utilizes `class-variance-authority` for conditional styling</li></ul> |
-| 🧪 | **Testing**       | <ul><li>Testing frameworks not explicitly mentioned</li><li>Potential for unit testing with Jest or React Testing Library</li></ul> |
-| ⚡️  | **Performance**   | <ul><li>Vite provides fast hot module replacement</li><li>Optimized for production builds</li></ul> |
-| 🛡️ | **Security**      | <ul><li>Dependencies regularly updated via npm</li><li>Use of secure libraries like Axios for API calls</li></ul> |
-| 📦 | **Dependencies**  | <ul><li>Core dependencies: React, TypeScript, Vite</li><li>Styling: Tailwind CSS, Tailwind Merge</li><li>Utility libraries: clsx, class-variance-authority</li></ul> |
-| 🚀 | **Scalability**   | <ul><li>Component-based structure allows for easy scaling</li><li>React's virtual DOM enhances performance with large datasets</li></ul> |
-
+- 📂 **Personal Playlists**: Create, edit, and manage your own playlists easily.
+- ❤️ **Favorite Songs**: Like songs to save them to your personal favorites collection.
+- 🧠 **Smart Recommendations**: Discover new music based on your listening habits.
+- 🔍 **Advanced Search**: Find songs, albums, artists, or genres instantly.
+- 🧑‍🎤 **Artist Pages**: Explore artist bios, top songs, albums, and similar artists.
+- 👤 **User Profiles**: Customize your avatar, username, and track your listening activity.
+- 🔐 **Authentication**: Secure signup/login with token-based session management.
+- 📱 **Responsive UI**: Fully optimized for desktop, tablet, and mobile devices.
+- 🎧 **Built-in Audio Player**: Control playback with features like skip, shuffle, loop, volume, and progress bar.
+- 🧩 **Component-Based Design**: Developed with React and Tailwind CSS for modularity and reusability.
+- ⚡ **Fast Performance**: Powered by Vite for blazing-fast development and runtime.
+- 💬 **Fandom Group Chat**: Join live chat rooms dedicated to artists or fan communities. Interact with other fans in real-time.
 ---
 
 ## 📁 Project Structure

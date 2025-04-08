@@ -2,10 +2,8 @@
 
 <!-- HEADER STYLE: CLASSIC -->
 <div align="center">
-
-<img src="music_app_fe.png" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
-
-# MUSIC_APP_FE
+	
+# MUSIC APP FRONTEND
 
 <em>Unleash Your Music Journey, Discover, Connect, Enjoy!</em>
 
@@ -31,24 +29,6 @@
 
 </div>
 <br>
-
----
-
-## 📄 Table of Contents
-
-- [Overview](#-overview)
-- [Getting Started](#-getting-started)
-    - [Prerequisites](#-prerequisites)
-    - [Installation](#-installation)
-    - [Usage](#-usage)
-    - [Testing](#-testing)
-- [Features](#-features)
-- [Project Structure](#-project-structure)
-    - [Project Index](#-project-index)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Acknowledgment](#-acknowledgment)
 
 ---
 
@@ -683,14 +663,6 @@ Music_app_fe uses the {__test_framework__} test framework. Run the test suite wi
 ```sh
 npm test
 ```
-
----
-
-## 📈 Roadmap
-
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
 
 ---
 

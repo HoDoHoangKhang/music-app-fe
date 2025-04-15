@@ -14,7 +14,7 @@ const SongRow = ({ song, albumTitle, albumReleaseDate, index }) => {
             <div className="text-white text-sm md:text-[14px] flex items-center">
                 <img
                     className="inline w-10 mr-3 rounded-sm"
-                    src={`http://127.0.0.1:8000${song.cover_image}`}
+                    src={song.cover_image}
                     alt={song.title}
                 />
                 <div className="inline-block">

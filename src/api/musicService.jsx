@@ -3,46 +3,6 @@ import { createApiInstance } from "./authService";
 const API_BASE_URL = "http://127.0.0.1:8000/api/music";
 const api = createApiInstance(API_BASE_URL);
 
-export const getAlbums = async () => {
-    try {
-        const response = await api.get(`/albums/`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching albums:", error);
-        return [];
-    }
-};
-
-export const getSongs = async () => {
-    try {
-        const response = await api.get(`/songs/`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching songs:", error);
-        return [];
-    }
-};
-
-export const getSongsFromAlbum = async (id) => {
-    try {
-        const response = await api.get(`/albums/${id}/songs/`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching songs from album:", error);
-        return [];
-    }
-};
-
-export const getAlbumFromId = async (id) => {
-    try {
-        const response = await api.get(`/albums/${id}/`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching album from id:", error);
-        return [];
-    }
-};
-
 // Toggle like/unlike cho bài hát
 export const toggleSongLike = async (songId) => {
     try {

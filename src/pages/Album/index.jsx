@@ -4,39 +4,60 @@ import { useEffect, useState } from "react";
 
 //component
 import SongRow from "../../components/SongRow";
+import AlbumDetail from "./AlbumDetail";
+import { getTotalDuration } from "../../utils/format";
+import { useGetAlbum } from "../../hooks/musics/use-get-album";
+import { useGetSongs } from "../../hooks/musics/use-get-songs";
 
 //icon
 import { FaPlay } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
-import AlbumDetail from "./AlbumDetail";
-import { getAlbumFromId, getSongsFromAlbum } from "../../api/musicService";
-import { getTotalDuration } from "../../utils/format";
 
 const Album = () => {
     const { id } = useParams(); // Lấy id từ URL
-    const [songs, setSongs] = useState([]);
-    const [albumDetail, setAlbumDetail] = useState([]);
     const [artist, setArtist] = useState();
+    const {
+        data: songs,
+        isLoading: songsLoading,
+        error: songsError,
+    } = useGetSongs({
+        album: id,
+    });
+
+    const {
+        data: albumDetail,
+        isLoading: albumLoading,
+        error: albumError,
+    } = useGetAlbum({
+        id: id,
+    });
     useEffect(() => {
-        const fetchData = async () => {
-            const [albumDetailData, songsData] = await Promise.all([
-                getAlbumFromId(id),
-                getSongsFromAlbum(id),
-            ]);
-            setSongs(songsData);
-            setAlbumDetail(albumDetailData);
-            setArtist(songsData[0].artist.user);
-        };
+        setArtist(albumDetail?.artist?.user);
+    }, [albumDetail]);
 
-        fetchData();
-    }, []);
-
+    console.log(artist);
     const fullName = [artist?.first_name, artist?.last_name]
         .filter(Boolean)
         .join(" ");
-
     const totalDuration = getTotalDuration(songs);
+
+    if (albumLoading || songsLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+    if (albumError || songsError) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-red-500">
+                    Có lỗi xảy ra: {albumError?.message || songsError?.message}
+                </div>
+            </div>
+        );
+    }
     return (
         <div className="py-4 flex flex-col h-full">
             <AlbumDetail
@@ -64,15 +85,19 @@ const Album = () => {
                     <LuClock3 className="m-auto text-[18px]" />
                 </div>
                 <div className="mt-3">
-                    {songs.map((item, index) => (
-                        <SongRow
-                            key={index}
-                            song={item}
-                            albumTitle={albumDetail.title}
-                            albumReleaseDate={albumDetail.release_date}
-                            index={index}
-                        />
-                    ))}
+                    {songs.length > 0 ? (
+                        songs.map((item, index) => (
+                            <SongRow
+                                key={index}
+                                song={item}
+                                albumTitle={item.album.title}
+                                albumReleaseDate={item.album.release_date}
+                                index={index}
+                            />
+                        ))
+                    ) : (
+                        <div className="text-gray-500">No songs available</div>
+                    )}
                 </div>
             </div>
         </div>

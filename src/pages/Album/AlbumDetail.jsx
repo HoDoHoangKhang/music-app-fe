@@ -23,7 +23,7 @@ const AlbumDetail = ({coverImage,
                     <p className="mt-1 text-[#a7a7a7] font-normal flex gap-1 items-center">
                         <img
                             className="inline-block w-6 h-6 object-cover rounded-full"
-                            src={`http://127.0.0.1:8000/${artistAvatar}`}
+                            src={artistAvatar}
                             alt=""
                         />
                         <b className="text-white font-bold"> {artistName} </b>•{" "}

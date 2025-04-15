@@ -36,7 +36,6 @@ const Login = () => {
             localStorage.setItem("username", data.username);
             localStorage.setItem("role", data.role);
             localStorage.setItem("access_token", data.access_token);
-            localStorage.setItem("refresh_token", data.refresh_token);
 
             setUser(data);
             navigate("/");

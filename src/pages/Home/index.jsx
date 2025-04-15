@@ -109,6 +109,38 @@ const Home = () => {
                     )}
                 </div>
             </div>
+
+            <div className="mb-4">
+                <Title
+                    title={"Playlists"}
+                    onClick={() => navigate(`/`)}
+                />
+                <div className="flex overflow-auto over">
+                    {songs?.length > 0 ? (
+                        songs?.map((song) => {
+                            const fullName = [
+                                song.artist.user.first_name,
+                                song.artist.user.last_name,
+                            ]
+                                .filter(Boolean)
+                                .join(" ");
+
+                            return (
+                                <SongItem
+                                    key={song.id}
+                                    name={song.title}
+                                    desc={fullName}
+                                    idSong={song.id}
+                                    idArtist={song.artist.id}
+                                    image={song.cover_image}
+                                />
+                            );
+                        })
+                    ) : (
+                        <div className="text-gray-500">No songs available</div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

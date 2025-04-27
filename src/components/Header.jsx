@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { GoHomeFill } from "react-icons/go";
-import {assets} from "../assets/assets"
+import { assets } from "../assets/assets";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 //icon
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-import {UserContext} from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 
 const Header = () => {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem("user_id");
@@ -18,6 +18,7 @@ const Header = () => {
         localStorage.removeItem("role");
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
+        setUser(null);
         navigate("/login");
     };
     return (
@@ -57,47 +58,56 @@ const Header = () => {
                     >
                         Premium
                     </button>
-                    <Menu>
-                        <MenuButton className="w-12 h-12 rounded-full bg-[#ffffff26] p-2 flex items-center justify-center cursor-pointer">
-                            <img
-                                className="aspect-square rounded-full object-fill"
-                                src={user?.avatar || assets.avtDefault}
-                                alt=""
-                            />
-                        </MenuButton>
-                        <MenuItems
-                            anchor="bottom end"
-                            className={
-                                "bg-[#282828] text-white p-1 w-[190px] rounded-sm z-999"
-                            }
+                    {user && user.id ? (
+                        <Menu>
+                            <MenuButton className="w-12 h-12 rounded-full bg-[#ffffff26] p-2 flex items-center justify-center cursor-pointer">
+                                <img
+                                    className="aspect-square rounded-full object-fill"
+                                    src={user?.avatar || assets.avtDefault}
+                                    alt=""
+                                />
+                            </MenuButton>
+                            <MenuItems
+                                anchor="bottom end"
+                                className={
+                                    "bg-[#282828] text-white p-1 w-[190px] rounded-sm z-999"
+                                }
+                            >
+                                <MenuItem>
+                                    <a
+                                        className="rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26] flex justify-between items-center"
+                                        href="/settings"
+                                    >
+                                        <span>Account</span>
+                                        <FaArrowUpRightFromSquare />
+                                    </a>
+                                </MenuItem>
+                                <MenuItem>
+                                    <a
+                                        className="block rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
+                                        href="/profile"
+                                    >
+                                        Profile
+                                    </a>
+                                </MenuItem>
+                                <MenuItem>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="block w-[100%] text-start cursor-po rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
+                                    >
+                                        Logout
+                                    </button>
+                                </MenuItem>
+                            </MenuItems>
+                        </Menu>
+                    ) : (
+                        <button
+                            onClick={() => navigate("/login")}
+                            className="px-4 py-1.5 text-sm font-semibold rounded-full bg-white cursor-pointer text-black hover:scale-105 transition-transform"
                         >
-                            <MenuItem>
-                                <a
-                                    className="rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26] flex justify-between items-center"
-                                    href="/settings"
-                                >
-                                    <span>Account</span>
-                                    <FaArrowUpRightFromSquare />
-                                </a>
-                            </MenuItem>
-                            <MenuItem>
-                                <a
-                                    className="block rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
-                                    href="/profile"
-                                >
-                                    Profile
-                                </a>
-                            </MenuItem>
-                            <MenuItem>
-                                <button
-                                    onClick={handleLogout}
-                                    className="block w-[100%] text-start cursor-po rounded-sm px-3 py-2 data-[focus]:bg-[#ffffff26]"
-                                >
-                                    Logout
-                                </button>
-                            </MenuItem>
-                        </MenuItems>
-                    </Menu>
+                            Đăng nhập
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

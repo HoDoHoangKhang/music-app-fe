@@ -7,9 +7,17 @@ const getAuthHeaders = () => {
     return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
+const isAuthenticated = () => {
+    const token = localStorage.getItem("access_token");
+    return !!token;
+};
+
 // Toggle like/unlike cho bài hát
 export const toggleSongLike = async (songId) => {
-    if (!songId) return null;
+    if (!songId || !isAuthenticated()) {
+        console.warn("Chưa đăng nhập! Không thể like/unlike bài hát.");
+        return null;
+    }
 
     try {
         const response = await axios.post(
@@ -20,10 +28,6 @@ export const toggleSongLike = async (songId) => {
         console.log(`${songId} ${response.data}`);
         return response.data;
     } catch (error) {
-        if (error.response?.status === 401) {
-            console.warn("Chưa đăng nhập! Không thể like/unlike bài hát.");
-            return null;
-        }
         console.error("Error toggling song like:", error);
         return null;
     }
@@ -31,7 +35,10 @@ export const toggleSongLike = async (songId) => {
 
 // Toggle like/unlike cho album
 export const toggleAlbumLike = async (albumId) => {
-    if (!albumId) return null;
+    if (!albumId || !isAuthenticated()) {
+        console.warn("Chưa đăng nhập! Không thể like/unlike album.");
+        return null;
+    }
 
     try {
         const response = await axios.post(
@@ -41,10 +48,6 @@ export const toggleAlbumLike = async (albumId) => {
         );
         return response.data;
     } catch (error) {
-        if (error.response?.status === 401) {
-            console.warn("Chưa đăng nhập! Không thể like/unlike album.");
-            return null;
-        }
         console.error("Error toggling album like:", error);
         return null;
     }
@@ -52,7 +55,12 @@ export const toggleAlbumLike = async (albumId) => {
 
 // Kiểm tra trạng thái like của bài hát
 export const checkSongLikeStatus = async (songId) => {
-    if (!songId) return false;
+    if (!songId || !isAuthenticated()) {
+        console.warn(
+            "Chưa đăng nhập! Không thể kiểm tra trạng thái like bài hát."
+        );
+        return false;
+    }
 
     try {
         const response = await axios.get(
@@ -61,12 +69,6 @@ export const checkSongLikeStatus = async (songId) => {
         );
         return response.data.liked;
     } catch (error) {
-        if (error.response?.status === 401) {
-            console.warn(
-                "Chưa đăng nhập! Không thể kiểm tra trạng thái like bài hát."
-            );
-            return false;
-        }
         console.error("Error checking song like status:", error);
         return false;
     }
@@ -74,7 +76,12 @@ export const checkSongLikeStatus = async (songId) => {
 
 // Kiểm tra trạng thái like của album
 export const checkAlbumLikeStatus = async (albumId) => {
-    if (!albumId) return false;
+    if (!albumId || !isAuthenticated()) {
+        console.warn(
+            "Chưa đăng nhập! Không thể kiểm tra trạng thái like album."
+        );
+        return false;
+    }
 
     try {
         const response = await axios.get(
@@ -83,12 +90,6 @@ export const checkAlbumLikeStatus = async (albumId) => {
         );
         return response.data.liked;
     } catch (error) {
-        if (error.response?.status === 401) {
-            console.warn(
-                "Chưa đăng nhập! Không thể kiểm tra trạng thái like album."
-            );
-            return false;
-        }
         console.error("Error checking album like status:", error);
         return false;
     }

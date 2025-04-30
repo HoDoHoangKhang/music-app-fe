@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
+import CreatePlaylistModal from "../pages/Playlist/CreatePlaylistModal";
 
 // Library
 import "react-contexify/dist/ReactContexify.css";
@@ -36,6 +37,8 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
         { id: 3, name: "Nhạc Chill" },
         { id: 4, name: "Workout Music" },
     ]);
+    const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
+        useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -71,6 +74,10 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
             return;
         }
         // Logic thêm vào playlist
+    };
+
+    const handleCreatePlaylistSuccess = () => {
+        // Có thể thêm logic cập nhật danh sách playlist ở đây
     };
 
     return (
@@ -130,7 +137,12 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
                             </div>
                         }
                     >
-                        <Item onClick={() => navigate("/create-playlist")}>
+                        <Item
+                            onClick={() => {
+                                setShowCreatePlaylistModal(true);
+                                console.log(idSong);
+                            }}
+                        >
                             <div className="flex items-center">
                                 <FiPlusCircle className="text-lg" />
                                 <p className="ml-2">Tạo playlist mới</p>
@@ -157,6 +169,12 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
             <LoginRequiredPopup
                 isOpen={showLoginPopup}
                 onClose={() => setShowLoginPopup(false)}
+            />
+            <CreatePlaylistModal
+                isOpen={showCreatePlaylistModal}
+                onClose={() => setShowCreatePlaylistModal(false)}
+                onSuccess={handleCreatePlaylistSuccess}
+                songId={idSong}
             />
         </>
     );

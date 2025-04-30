@@ -131,3 +131,92 @@ export const getUserPlaylistDetail = async (playlistId) => {
         return false;
     }
 };
+
+
+
+// Tạo playlist mới và thêm bài hát vào playlist
+export const createPlaylist = async (name, songId) => {
+    try {
+        // 1. Tạo playlist mới
+        const response = await axios.post(
+            `${API_BASE_URL}/playlists/`,
+            { name: name },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "access_token"
+                    )}`,
+                },
+            }
+        );
+        const playlist = response.data;
+
+        // 2. Thêm bài hát vào playlist vừa tạo
+        
+        if (songId) {
+            await addSongToPlaylist(playlist.id, songId);
+        }
+        return playlist;
+    } catch (error) {
+        console.error(
+            "Error creating playlist:",
+            error.response?.data || error
+        );
+        throw error;
+    }
+};
+
+
+// Tạo playlist mới rỗng
+export const createEmptyPlaylist = async (name) => {
+    try {
+        const response = await axios.post(
+            `${API_BASE_URL}/playlists/`,
+            { name: name },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "access_token"
+                    )}`,
+                },
+            }
+        );
+        const playlist = response.data;
+
+        return playlist;
+    } catch (error) {
+        console.error(
+            "Error creating playlist:",
+            error.response?.data || error
+        );
+        throw error;
+    }
+};
+
+
+// Thêm bài hát vào playlist
+export const addSongToPlaylist = async (playlistId, songId) => {
+    try {
+        const response = await axios.post(
+            `${API_BASE_URL}/playlists/${playlistId}/songs/${songId}/`,
+            {},
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "access_token"
+                    )}`,
+                },
+            }
+        );
+        return response.data; // hoặc return true nếu không cần dữ liệu trả về
+    } catch (error) {
+        console.error(
+            "Error adding song to playlist:",
+            error.response?.data || error
+        );
+        throw error;
+    }
+};

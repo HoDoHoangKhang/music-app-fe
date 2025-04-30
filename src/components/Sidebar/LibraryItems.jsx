@@ -1,92 +1,78 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LibraryItem from "./LibraryItem";
 import { CiHeart } from "react-icons/ci";
-const musicLibrary = [
-    {
-        id: "1",
-        title: "Liked Songs",
-        type: "playlist",
-        subtitle: "20 songs",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-        icon: CiHeart,
-        iconColor: "rgb(139, 115, 255)",
-    },
-    {
-        id: "2",
-        title: "HIEUTHUHAI",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "3",
-        title: "Mukbang music",
-        type: "playlist",
-        subtitle: "Hồ Đỗ Hoàng Khang",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "4",
-        title: "Dù Cho Tàn Thế",
-        type: "single",
-        subtitle: "ERIK",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "5",
-        title: "Giang ơi Radio",
-        type: "podcast",
-        subtitle: "Giang ơi Radio",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "6",
-        title: "Chilies",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "7",
-        title: "W/N",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "8",
-        title: "Sơn Tùng M-TP",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "9",
-        title: "Đen",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "10",
-        title: "RAP VIỆT",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "11",
-        title: "RPT MCK",
-        type: "artist",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-    {
-        id: "12",
-        title: "Đâm Tinh",
-        type: "single",
-        subtitle: "kis",
-        imagePath: "lovable-uploads/6f4e31fa-9da5-42e0-aa0b-8af4133cdd37.png",
-    },
-];
+import {
+    getCurrentUserPlaylists,
+    getLikedAlbums,
+} from "../../api/musicService";
+import { getFollowingArtists } from "../../api/userService";
 
 const LibraryItems = ({ activeItem, setActiveItem }) => {
+    const [libraryItems, setLibraryItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchLibraryItems = async () => {
+            try {
+                setLoading(true);
+                let allItems = [];
+
+                // Lấy playlists
+                const playlists = await getCurrentUserPlaylists();
+                const playlistItems = playlists.map((playlist) => ({
+                    id: playlist.id,
+                    title: playlist.name,
+                    type: "Playlist",
+                    subtitle: `${playlist.songs?.length || 0} bài hát`,
+                    imagePath: playlist.coverImage || "default-playlist.png",
+                }));
+                allItems = [...allItems, ...playlistItems];
+
+                // Lấy albums
+                const albums = await getLikedAlbums();
+                const albumItems = albums.map((album) => ({
+                    id: album.id,
+                    title: album.title,
+                    type: "Album",
+                    subtitle: album.artist.user.first_name + " " + album.artist.user.last_name,
+                    imagePath: album.coverImage || "default-album.png",
+                }));
+                allItems = [...allItems, ...albumItems];
+
+                // Lấy artists
+                const artistsData = await getFollowingArtists();
+                const artistItems =
+                    artistsData?.following_artists?.map((artist) => ({
+                        id: artist.id,
+                        title: artist.user.first_name + " " + artist.user.last_name,
+                        type: "Artist",
+                        subtitle: `${artist.followers || 0} người theo dõi`,
+                        imagePath: artist.avatar || "default-artist.png",
+                    })) || [];
+                allItems = [...allItems, ...artistItems];
+
+                setLibraryItems(allItems);
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu thư viện:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLibraryItems();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex-1 sidebar-scroll flex items-center justify-center">
+                <div className="text-white/60">Đang tải...</div>
+            </div>
+        );
+    }
+
     return (
         <div className="flex-1 sidebar-scroll">
-            {musicLibrary.map((item) => (
+            {libraryItems.map((item) => (
                 <LibraryItem
                     key={item.id}
                     item={item}
@@ -94,6 +80,11 @@ const LibraryItems = ({ activeItem, setActiveItem }) => {
                     onClick={() => setActiveItem(item.id)}
                 />
             ))}
+            {libraryItems.length === 0 && (
+                <div className="text-center text-white/60 py-8">
+                    Không có nội dung nào trong thư viện
+                </div>
+            )}
         </div>
     );
 };

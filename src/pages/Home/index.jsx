@@ -13,6 +13,8 @@ import { useGetAlbums } from "../../hooks/musics/use-get-albums";
 import { useUser } from "../../context/UserContext";
 import { getCurrentUserPlaylists } from "../../api/musicService";
 import PlaylistItem from "../../components/PlaylistItem";
+import ArtistItem from "../../components/ArtistItem";
+import { useGetArtists } from "../../hooks/users/use-get-artists";
 
 const categories = [
     { id: "all", label: "All" },
@@ -38,10 +40,15 @@ const Home = () => {
         error: albumsError,
     } = useGetAlbums();
 
+    const {
+        data: artists,
+        isLoading: artistsLoading,
+        error: artistsError,
+    } = useGetArtists();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Lấy danh sách playlist của người dùng
                 if (isLoggedIn) {
                     const playlists = await getCurrentUserPlaylists();
                     if (playlists) {
@@ -154,6 +161,29 @@ const Home = () => {
                             {isLoggedIn
                                 ? "Bạn chưa có playlist nào"
                                 : "Vui lòng đăng nhập để xem playlist"}
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <div className="mb-4">
+                <Title
+                    title={"Nghệ sĩ nổi bật"}
+                    onClick={() => navigate(`/artists`)}
+                />
+                <div className="flex overflow-auto">
+                    {artists.length > 0 ? (
+                        artists.map((artist) => (
+                            <ArtistItem
+                                key={artist.id}
+                                id={artist.id}
+                                avatar={artist?.user?.avatar}
+                                name={artist?.user?.last_name}
+                            />
+                        ))
+                    ) : (
+                        <div className="text-gray-500">
+                            No artists available
                         </div>
                     )}
                 </div>

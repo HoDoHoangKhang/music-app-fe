@@ -12,25 +12,18 @@ import { LuClock3 } from "react-icons/lu";
 import { getPlaylistDetail } from "../../api/musicService";
 import PlaylistDetail from "./PlaylistDetail";
 import { getTotalDuration } from "../../utils/format";
+import { useUser } from "../../context/UserContext";
 
 const Playlist = () => {
     const { id } = useParams(); // Lấy id từ URL
     const [playlistDetail, setPlaylistDetail] = useState(null);
-    const [creatorInfo, setCreatorInfo] = useState(null);
+    const { user } = useUser();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const playlistDetailData = await getPlaylistDetail(id);
                 setPlaylistDetail(playlistDetailData);
-
-                // Nếu có thông tin về user/artist creator, lấy thông tin để hiển thị
-                if (
-                    playlistDetailData?.songs?.length > 0 &&
-                    playlistDetailData?.songs[0]?.artist?.user
-                ) {
-                    setCreatorInfo(playlistDetailData.songs[0].artist.user);
-                }
             } catch (error) {
                 console.error("Lỗi khi tải thông tin playlist:", error);
             }
@@ -44,9 +37,8 @@ const Playlist = () => {
     };
 
     const totalDuration = getTotalDuration(playlistDetail?.songs);
-    const creatorName = creatorInfo
-        ? `${creatorInfo.first_name} ${creatorInfo.last_name}`.trim() ||
-          creatorInfo.username
+    const userName = user
+        ? `${user.first_name} ${user.last_name}`.trim() || user.username
         : "Không xác định";
 
     return (
@@ -54,7 +46,7 @@ const Playlist = () => {
             <PlaylistDetail
                 coverImage={playlistDetail?.cover_image}
                 title={playlistDetail?.name}
-                artistName={creatorName}
+                artistName={userName}
                 totalSongs={playlistDetail?.songs?.length || 0}
                 totalDuration={totalDuration}
                 playlistId={id}
@@ -73,7 +65,7 @@ const Playlist = () => {
                     <p>#</p>
                     <p>Tiêu đề</p>
                     <p>Album</p>
-                    <p className="hidden sm:block">Date</p>
+                    <p className="hidden sm:block">Ngày thêm</p>
                     <LuClock3 className="m-auto text-[18px]" />
                 </div>
                 <div className="mt-3">

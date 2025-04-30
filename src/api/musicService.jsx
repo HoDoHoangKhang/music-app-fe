@@ -278,3 +278,20 @@ export const updatePlaylist = async (playlistId, formData) => {
         throw error;
     }
 };
+export const getLikedAlbums = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/albums/liked/`, {
+            headers: getAuthHeaders(),
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response?.status === 401) {
+            console.warn(
+                "Chưa đăng nhập! Không thể lấy danh sách album yêu thích."
+            );
+            return null;
+        }
+        console.error("Error fetching liked albums:", error);
+        return null;
+    }
+};

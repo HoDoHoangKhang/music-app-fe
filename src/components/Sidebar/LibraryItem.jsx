@@ -1,18 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { CiMusicNote1 } from "react-icons/ci";
 import { FiUsers } from "react-icons/fi";
 import { FiRadio } from "react-icons/fi";
 import { PiMicrophoneStageLight } from "react-icons/pi";
+
 export const getTypeIcon = (type) => {
     switch (type) {
-        case "playlist":
+        case "Playlist":
             return CiMusicNote1;
-        case "artist":
+        case "Artist":
             return FiUsers;
-        case "podcast":
+        case "Album":
             return FiRadio;
-        case "single":
+        case "Single":
             return PiMicrophoneStageLight;
         default:
             return null;
@@ -21,13 +23,13 @@ export const getTypeIcon = (type) => {
 
 export const getTypeLabel = (type) => {
     switch (type) {
-        case "playlist":
+        case "Playlist":
             return "Playlist";
-        case "artist":
+        case "Artist":
             return "Artist";
-        case "podcast":
-            return "Podcast";
-        case "single":
+        case "Album":
+            return "Album";
+        case "Single":
             return "Single";
         default:
             return type;
@@ -35,14 +37,33 @@ export const getTypeLabel = (type) => {
 };
 
 const LibraryItem = ({ item, isActive, onClick }) => {
+    const navigate = useNavigate();
     const TypeIcon = getTypeIcon(item.type);
+
+    const handleClick = () => {
+        onClick();
+
+        switch (item.type) {
+            case "Playlist":
+                navigate(`/playlist/${item.id}`);
+                break;
+            case "Album":
+                navigate(`/album/${item.id}`);
+                break;
+            case "Artist":
+                navigate(`/artist/${item.id}`);
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
         <div
             className={`${
                 isActive ? "bg-zinc-700/30" : ""
             } hover:bg-zinc-700/30 flex items-center gap-3 p-2 rounded-sm cursor-pointer transition-all duration-200 ease-in-out`}
-            onClick={onClick}
+            onClick={handleClick}
         >
             <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0 bg-music-muted">
                 {item.id === "1" ? (

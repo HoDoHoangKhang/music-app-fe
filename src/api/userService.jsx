@@ -51,3 +51,22 @@ export const toggleFollow = async (artistId) => {
         return null;
     }
 };
+
+export const getFollowingArtists = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/following-artists/`, {
+            headers: getAuthHeaders(),
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response?.status === 401) {
+            console.warn(
+                "Chưa đăng nhập! Không thể lấy danh sách nghệ sĩ đã follow."
+            );
+            return null;
+        }
+        console.error("Error fetching following artists:", error);
+        return null;
+    }
+};
+

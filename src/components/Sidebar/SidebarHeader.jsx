@@ -1,16 +1,20 @@
 // React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //Component
 import Navbar from "../Navbar";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import CreatePlaylistModal from "../../pages/Playlist/CreatePlaylistModal";
+import { toast } from "react-toastify";
 
 // IconIcon
 import { LuLibrary } from "react-icons/lu";
 import { FaSearch } from "react-icons/fa";
 import { Plus } from "lucide-react";
 import { PiMusicNotesPlus } from "react-icons/pi";
+
+// API
+import { getCurrentUserPlaylists } from "../../api/musicService";
 
 const categories = [
     { id: "playlists", label: "Playlists" },
@@ -20,9 +24,50 @@ const categories = [
 ];
 const SidebarHeader = ({ activeCategory, setActiveCategory }) => {
     const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
 
-    const handleCreatePlaylistSuccess = () => {
-        // Có thể thêm logic cập nhật danh sách playlist nếu cần
+    // Lấy danh sách playlist khi component được tải
+    useEffect(() => {
+        const fetchPlaylists = async () => {
+            const userPlaylists = await getCurrentUserPlaylists();
+            if (userPlaylists) {
+                setPlaylists(userPlaylists);
+            }
+        };
+        fetchPlaylists();
+    }, []);
+
+    const handleCreatePlaylistSuccess = (newPlaylist) => {
+        // Kiểm tra nếu newPlaylist hợp lệ trước khi thêm vào danh sách
+        if (newPlaylist && newPlaylist.id && newPlaylist.name) {
+            // Cập nhật danh sách playlist trực tiếp
+            setPlaylists((prevPlaylists) => [...prevPlaylists, newPlaylist]);
+
+            // Hiển thị thông báo thành công
+            toast.success(`Đã tạo playlist "${newPlaylist.name}" thành công`);
+
+            // Đóng modal
+            setShowPlaylistModal(false);
+
+            // Tải lại danh sách playlist
+            const fetchPlaylists = async () => {
+                try {
+                    console.log("Đang tải lại danh sách playlist...");
+                    const userPlaylists = await getCurrentUserPlaylists();
+                    console.log("Playlist đã tải:", userPlaylists);
+                    if (userPlaylists) {
+                        setPlaylists(userPlaylists);
+                    }
+                } catch (error) {
+                    console.error("Lỗi khi tải danh sách playlist:", error);
+                    toast.error("Không thể tải danh sách playlist");
+                }
+            };
+            fetchPlaylists();
+        } else {
+            console.error("Dữ liệu playlist trả về không hợp lệ:", newPlaylist);
+            toast.error("Có lỗi khi tạo playlist");
+        }
     };
 
     return (

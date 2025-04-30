@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Component
@@ -10,6 +10,9 @@ import Title from "../../components/Title";
 import AlbumItem from "../../components/AlbumItem";
 import { useGetSongs } from "../../hooks/musics/use-get-songs";
 import { useGetAlbums } from "../../hooks/musics/use-get-albums";
+import { useUser } from "../../context/UserContext";
+import { getCurrentUserPlaylists } from "../../api/musicService";
+import PlaylistItem from "../../components/PlaylistItem";
 
 const categories = [
     { id: "all", label: "All" },
@@ -20,6 +23,8 @@ const categories = [
 const Home = () => {
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState("all");
+    const [userPlaylists, setUserPlaylists] = useState([]);
+    const { isLoggedIn } = useUser();
 
     const {
         data: songs,
@@ -32,6 +37,24 @@ const Home = () => {
         isLoading: albumsLoading,
         error: albumsError,
     } = useGetAlbums();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Lấy danh sách playlist của người dùng
+                if (isLoggedIn) {
+                    const playlists = await getCurrentUserPlaylists();
+                    if (playlists) {
+                        setUserPlaylists(playlists);
+                    }
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        };
+
+        fetchData();
+    }, [isLoggedIn]);
 
     if (albumsLoading || songsLoading) {
         return (
@@ -112,32 +135,26 @@ const Home = () => {
 
             <div className="mb-4">
                 <Title
-                    title={"Playlists"}
-                    onClick={() => navigate(`/`)}
+                    title={"My Playlists"}
+                    onClick={() => navigate(`/playlists`)}
                 />
-                <div className="flex overflow-auto over">
-                    {songs?.length > 0 ? (
-                        songs?.map((song) => {
-                            const fullName = [
-                                song.artist.user.first_name,
-                                song.artist.user.last_name,
-                            ]
-                                .filter(Boolean)
-                                .join(" ");
-
-                            return (
-                                <SongItem
-                                    key={song.id}
-                                    name={song.title}
-                                    desc={fullName}
-                                    idSong={song.id}
-                                    idArtist={song.artist.id}
-                                    image={song.cover_image}
-                                />
-                            );
-                        })
+                <div className="flex overflow-auto">
+                    {userPlaylists?.length > 0 ? (
+                        userPlaylists?.map((playlist) => (
+                            <PlaylistItem
+                                key={playlist.id}
+                                name={playlist.name}
+                                image={playlist.cover_image}
+                                songCount={playlist.songs.length}
+                                idPlaylist={playlist.id}
+                            />
+                        ))
                     ) : (
-                        <div className="text-gray-500">No songs available</div>
+                        <div className="text-gray-500">
+                            {isLoggedIn
+                                ? "Bạn chưa có playlist nào"
+                                : "Vui lòng đăng nhập để xem playlist"}
+                        </div>
                     )}
                 </div>
             </div>

@@ -5,6 +5,7 @@ import CreatePlaylistModal from "../pages/Playlist/CreatePlaylistModal";
 // Library
 import "react-contexify/dist/ReactContexify.css";
 import { Menu, Item, Submenu, useContextMenu } from "react-contexify";
+import { toast } from "react-toastify";
 
 // Component
 import { PlayerContext } from "../context/PlayerContext";
@@ -20,7 +21,12 @@ import { FaHeart } from "react-icons/fa";
 import { MdPlaylistAdd } from "react-icons/md";
 
 //api
-import { checkSongLikeStatus, toggleSongLike } from "../api/musicService";
+import {
+    checkSongLikeStatus,
+    toggleSongLike,
+    getCurrentUserPlaylists,
+    addSongToPlaylist,
+} from "../api/musicService";
 
 const SongItem = ({ name, image, desc, idSong, idArtist }) => {
     const navigate = useNavigate();
@@ -31,12 +37,7 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const { playWithId } = useContext(PlayerContext);
     const { isLoggedIn, user } = useUser();
-    const [playlists, setPlaylists] = useState([
-        { id: 1, name: "Nhạc Yêu Thích" },
-        { id: 2, name: "Playlist của tôi" },
-        { id: 3, name: "Nhạc Chill" },
-        { id: 4, name: "Workout Music" },
-    ]);
+    const [playlists, setPlaylists] = useState([]);
     const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
         useState(false);
 
@@ -45,14 +46,52 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
             if (isLoggedIn) {
                 const likeData = await checkSongLikeStatus(idSong);
                 setIsLikeSong(likeData);
+
+                // Lấy danh sách playlist của user
+                const userPlaylists = await getCurrentUserPlaylists();
+                if (userPlaylists) {
+                    setPlaylists(userPlaylists);
+                }
             }
         };
         fetchData();
     }, [idSong, isLoggedIn]);
 
     const handleAddToPlaylist = (playlistId) => {
-        console.log(`Adding song ${idSong} to playlist ${playlistId}`);
-        // Thêm logic thêm bài hát vào playlist ở đây
+        if (!isLoggedIn) {
+            setShowLoginPopup(true);
+            return;
+        }
+
+        // Hiển thị thông báo đang xử lý
+        const loadingToast = toast.loading("Đang thêm bài hát vào playlist...");
+
+        addSongToPlaylist(playlistId, idSong)
+            .then((response) => {
+                // Cập nhật thông báo thành công
+                toast.update(loadingToast, {
+                    render: `Đã thêm bài hát "${name}" vào playlist thành công`,
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 3000,
+                });
+                console.log(
+                    `Đã thêm bài hát ${idSong} vào playlist ${playlistId}`,
+                    response
+                );
+            })
+            .catch((error) => {
+                // Hiển thị thông báo lỗi
+                toast.update(loadingToast, {
+                    render:
+                        error.response?.data?.message ||
+                        "Lỗi khi thêm bài hát vào playlist",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 3000,
+                });
+                console.error("Lỗi khi thêm bài hát vào playlist:", error);
+            });
     };
 
     const handleLikeClick = () => {
@@ -68,16 +107,32 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
         toggleSongLike(idSong);
     };
 
-    const handleAddToPlaylistClick = () => {
+    const handleAddToPlaylistClick = (playlistId) => {
         if (!isLoggedIn) {
             setShowLoginPopup(true);
             return;
         }
-        // Logic thêm vào playlist
+        handleAddToPlaylist(playlistId);
     };
 
-    const handleCreatePlaylistSuccess = () => {
-        // Có thể thêm logic cập nhật danh sách playlist ở đây
+    const handleCreatePlaylistSuccess = (newPlaylist) => {
+        // Kiểm tra nếu newPlaylist hợp lệ trước khi thêm vào danh sách
+        if (newPlaylist && newPlaylist.id && newPlaylist.name) {
+            // Cập nhật danh sách playlist khi tạo mới
+            setPlaylists((prevPlaylists) => [...prevPlaylists, newPlaylist]);
+
+            // Hiển thị thông báo thành công
+            toast.success(`Đã tạo playlist "${newPlaylist.name}" thành công`);
+
+            // Tải lại danh sách playlist
+            const fetchPlaylists = async () => {
+                const userPlaylists = await getCurrentUserPlaylists();
+                if (userPlaylists) {
+                    setPlaylists(userPlaylists);
+                }
+            };
+            fetchPlaylists();
+        }
     };
 
     return (
@@ -151,7 +206,9 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
                         {playlists.map((playlist) => (
                             <Item
                                 key={playlist.id}
-                                onClick={handleAddToPlaylistClick}
+                                onClick={() =>
+                                    handleAddToPlaylistClick(playlist.id)
+                                }
                             >
                                 <div className="flex items-center">
                                     <MdPlaylistAdd className="text-lg" />

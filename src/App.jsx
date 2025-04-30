@@ -10,6 +10,8 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import UserContextProvider from "./context/UserContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
     const { audioRef, track } = useContext(PlayerContext);
@@ -42,6 +44,18 @@ const App = () => {
                         preload="auto"
                     ></audio>
                 )}
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
             </div>
         </UserContextProvider>
     );

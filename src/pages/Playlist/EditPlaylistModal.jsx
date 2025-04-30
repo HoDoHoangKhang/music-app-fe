@@ -1,9 +1,26 @@
-import { useState } from "react";
-import { createPlaylist } from "../../api/musicService";
+import { useState, useEffect } from "react";
+import { updatePlaylist } from "../../api/musicService";
+import { toast } from "react-toastify";
 
-const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
-    const [playlistName, setPlaylistName] = useState("");
+const EditPlaylistModal = ({
+    isOpen,
+    onClose,
+    playlistId,
+    currentName,
+    currentImage,
+    onSuccess,
+}) => {
+    const [playlistName, setPlaylistName] = useState(currentName);
+    const [coverImage, setCoverImage] = useState(null);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (isOpen) {
+            setPlaylistName(currentName);
+            setCoverImage(null);
+            setError("");
+        }
+    }, [isOpen, currentName]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,14 +30,28 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
         }
 
         try {
-            // Tạo playlist mới và thêm bài hát vào playlist
-            const newPlaylist = await createPlaylist(playlistName, songId);
+            const formData = new FormData();
+            formData.append("name", playlistName);
+            if (coverImage) {
+                formData.append("cover_image", coverImage);
+            }
+
+            const updatedPlaylist = await updatePlaylist(playlistId, formData);
             if (onSuccess && typeof onSuccess === "function") {
-                onSuccess(newPlaylist);
+                onSuccess(updatedPlaylist);
             }
             onClose();
+            toast.success("Cập nhật playlist thành công");
         } catch (error) {
-            setError("Có lỗi xảy ra khi tạo playlist");
+            setError("Có lỗi xảy ra khi cập nhật playlist");
+            toast.error("Có lỗi xảy ra khi cập nhật playlist");
+        }
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setCoverImage(file);
         }
     };
 
@@ -30,7 +61,7 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
         <div className="fixed inset-0 bg-black/35 bg-opacity-50 flex items-center justify-center z-1010101">
             <div className="bg-zinc-800 p-6 rounded-lg w-96 z-1010101">
                 <h2 className="text-xl font-bold mb-4 text-white">
-                    Tạo Playlist Mới
+                    Chỉnh sửa Playlist
                 </h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -45,6 +76,17 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
                             <p className="text-red-500 text-sm mt-1">{error}</p>
                         )}
                     </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Ảnh bìa
+                        </label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="w-full px-3 py-2 bg-zinc-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
                     <div className="flex justify-end gap-2">
                         <button
                             type="button"
@@ -57,7 +99,7 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
                             type="submit"
                             className="px-4 py-2 bg-green-500 rounded hover:bg-green-600 transition-colors"
                         >
-                            Tạo
+                            Lưu
                         </button>
                     </div>
                 </form>
@@ -66,4 +108,4 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
     );
 };
 
-export default CreatePlaylistModal;
+export default EditPlaylistModal;

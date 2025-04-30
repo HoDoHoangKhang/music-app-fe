@@ -132,8 +132,6 @@ export const getUserPlaylistDetail = async (playlistId) => {
     }
 };
 
-
-
 // Tạo playlist mới và thêm bài hát vào playlist
 export const createPlaylist = async (name, songId) => {
     try {
@@ -153,7 +151,7 @@ export const createPlaylist = async (name, songId) => {
         const playlist = response.data;
 
         // 2. Thêm bài hát vào playlist vừa tạo
-        
+
         if (songId) {
             await addSongToPlaylist(playlist.id, songId);
         }
@@ -166,7 +164,6 @@ export const createPlaylist = async (name, songId) => {
         throw error;
     }
 };
-
 
 // Tạo playlist mới rỗng
 export const createEmptyPlaylist = async (name) => {
@@ -195,7 +192,6 @@ export const createEmptyPlaylist = async (name) => {
     }
 };
 
-
 // Thêm bài hát vào playlist
 export const addSongToPlaylist = async (playlistId, songId) => {
     try {
@@ -215,6 +211,68 @@ export const addSongToPlaylist = async (playlistId, songId) => {
     } catch (error) {
         console.error(
             "Error adding song to playlist:",
+            error.response?.data || error
+        );
+        throw error;
+    }
+};
+
+// Lấy danh sách playlist của user đang đăng nhập
+export const getCurrentUserPlaylists = async () => {
+    if (!isAuthenticated()) {
+        console.warn("Chưa đăng nhập! Không thể lấy danh sách playlist.");
+        return null;
+    }
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/me/playlists/`, {
+            headers: getAuthHeaders(),
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error getting current user playlists:", error);
+        return null;
+    }
+};
+
+// Lấy chi tiết playlist theo ID
+export const getPlaylistDetail = async (playlistId) => {
+    if (!playlistId) {
+        console.warn("Playlist ID không hợp lệ!");
+        return null;
+    }
+
+    try {
+        const response = await axios.get(
+            `${API_BASE_URL}/playlists/${playlistId}/`,
+            { headers: getAuthHeaders() }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error getting playlist detail:", error);
+        return null;
+    }
+};
+
+// Cập nhật thông tin playlist
+export const updatePlaylist = async (playlistId, formData) => {
+    try {
+        const response = await axios.put(
+            `${API_BASE_URL}/playlists/${playlistId}/`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "access_token"
+                    )}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error(
+            "Error updating playlist:",
             error.response?.data || error
         );
         throw error;

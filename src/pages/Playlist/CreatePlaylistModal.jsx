@@ -25,9 +25,9 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSuccess, songId }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-zinc-800 p-6 rounded-lg w-96">
-                <h2 className="text-xl font-bold mb-4">Tạo Playlist Mới</h2>
+        <div className="fixed inset-0 bg-black/35 bg-opacity-50 flex items-center justify-center z-1010101">
+            <div className="bg-zinc-800 p-6 rounded-lg w-96 z-1010101">
+                <h2 className="text-xl font-bold mb-4 text-white">Tạo Playlist Mới</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <input

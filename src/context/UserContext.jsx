@@ -24,7 +24,11 @@ const UserContextProvider = ({ children }) => {
                             },
                         }
                     );
-                    setUser(response.data);
+                    // Thêm isPremium vào user data
+                    setUser({
+                        ...response.data,
+                        isPremium: response.data.is_premium || false,
+                    });
                 } catch (error) {
                     console.error("Lỗi khi lấy user:", error);
                     logout();
@@ -43,7 +47,11 @@ const UserContextProvider = ({ children }) => {
         localStorage.setItem("username", userData.username);
         localStorage.setItem("role", userData.role);
         setIsLoggedIn(true);
-        setUser(userData);
+        // Thêm isPremium vào user data khi login
+        setUser({
+            ...userData,
+            isPremium: userData.is_premium || false,
+        });
     };
 
     const logout = () => {
@@ -73,7 +81,11 @@ const UserContextProvider = ({ children }) => {
                     },
                 }
             );
-            setUser(response.data);
+            // Thêm isPremium vào user data khi update
+            setUser({
+                ...response.data,
+                isPremium: response.data.is_premium || false,
+            });
         } catch (error) {
             console.error("Lỗi khi lấy user:", error);
             logout();

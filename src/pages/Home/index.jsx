@@ -131,6 +131,7 @@ const Home = () => {
                                     idSong={song.id}
                                     idArtist={song.artist.id}
                                     image={song.cover_image}
+                                    isPremium={song.is_premium}
                                 />
                             );
                         })

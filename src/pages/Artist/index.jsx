@@ -67,9 +67,7 @@ const Artist = () => {
         return <div>Loading...</div>;
     }
     if (artistDetailError || songsError || albumsError || artistsError) {
-        return (
-            <div className="text-red-500">Error loading data</div>
-        );
+        return <div className="text-red-500">Error loading data</div>;
     }
     const fullNameArtist = formatFullName(artistDetail.user);
     return (

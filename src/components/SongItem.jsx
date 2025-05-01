@@ -19,6 +19,7 @@ import { FaRegHeart } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa";
 import { MdPlaylistAdd } from "react-icons/md";
+import { FaCrown } from "react-icons/fa";
 
 //api
 import {
@@ -27,8 +28,9 @@ import {
     getCurrentUserPlaylists,
     addSongToPlaylist,
 } from "../api/musicService";
+import { checkPremiumStatus } from "../api/paymentsService";
 
-const SongItem = ({ name, image, desc, idSong, idArtist }) => {
+const SongItem = ({ name, image, desc, idSong, idArtist, isPremium }) => {
     const navigate = useNavigate();
     // Tạo menuId riêng cho mỗi bài hát dựa trên idSong
     const menuId = `context-menu-${idSong}`;
@@ -40,6 +42,28 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
     const [playlists, setPlaylists] = useState([]);
     const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
         useState(false);
+    const [premiumStatus, setPremiumStatus] = useState(null);
+
+    useEffect(() => {
+        const checkUserPremiumStatus = async () => {
+            if (isLoggedIn) {
+                try {
+                    const status = await checkPremiumStatus();
+                    setPremiumStatus(status);
+                } catch (error) {
+                    console.error(
+                        "Lỗi khi kiểm tra trạng thái premium:",
+                        error
+                    );
+                }
+            }
+        };
+        checkUserPremiumStatus();
+    }, [isLoggedIn]);
+
+    // Kiểm tra xem người dùng có thể phát bài hát premium không
+    const canPlayPremiumSong =
+        !isPremium || (isLoggedIn && premiumStatus?.status === "active");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -138,7 +162,15 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
     return (
         <>
             <div
-                onClick={() => playWithId(idSong)}
+                onClick={() => {
+                    if (!isLoggedIn) {
+                        setShowLoginPopup(true);
+                    } else if (!canPlayPremiumSong) {
+                        navigate("/premium");
+                    } else {
+                        playWithId(idSong);
+                    }
+                }}
                 onContextMenu={(e) => show({ event: e, props: { idSong } })}
                 key={idSong}
                 className="rounded-sm p-3 hover:bg-zinc-700/30 transition-colors group cursor-pointer min-w-[180px] max-w-[180px]"
@@ -149,20 +181,31 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
                         alt="Song Image"
                         className="w-full aspect-square object-cover rounded-sm mb-4"
                     />
+                    {isPremium && (
+                        <div className="absolute top-2 right-2">
+                            <FaCrown className="text-yellow-400 text-lg" />
+                        </div>
+                    )}
                     <button className="cursor-pointer absolute bottom-2 right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-xl">
                         <FaPlay className="text-black text-sm" />
                     </button>
                 </div>
-                <h3 className="font-semibold text-sm truncate">{name}</h3>
-                <p
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/artist/${idArtist}`);
-                    }}
-                    className="text-xs text-gray-400 truncate hover:underline cursor-pointer"
-                >
-                    {desc}
-                </p>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h3 className="font-semibold text-sm truncate">
+                            {name}
+                        </h3>
+                        <p
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/artist/${idArtist}`);
+                            }}
+                            className="text-xs text-gray-400 truncate hover:underline cursor-pointer"
+                        >
+                            {desc}
+                        </p>
+                    </div>
+                </div>
 
                 {/* Context Menu */}
                 <Menu
@@ -171,52 +214,67 @@ const SongItem = ({ name, image, desc, idSong, idArtist }) => {
                     theme="none"
                     animation={false}
                 >
-                    <Item onClick={handleLikeClick}>
-                        {isLikeSong ? (
-                            <div className="flex items-center">
-                                <FaHeart className="text-lg text-red-500" />
-                                <p className="ml-2">Unlike</p>
-                            </div>
-                        ) : (
-                            <div className="flex items-center">
-                                <FaRegHeart className="text-lg" />
-                                <p className="ml-2">Like</p>
-                            </div>
-                        )}
-                    </Item>
-                    <Submenu
-                        label={
-                            <div className="flex items-center">
-                                <FiPlusCircle className="text-lg" />
-                                <p className="ml-2">Add to Playlist</p>
-                            </div>
-                        }
-                    >
-                        <Item
-                            onClick={() => {
-                                setShowCreatePlaylistModal(true);
-                                console.log(idSong);
-                            }}
-                        >
-                            <div className="flex items-center">
-                                <FiPlusCircle className="text-lg" />
-                                <p className="ml-2">Tạo playlist mới</p>
-                            </div>
-                        </Item>
-                        {playlists.map((playlist) => (
-                            <Item
-                                key={playlist.id}
-                                onClick={() =>
-                                    handleAddToPlaylistClick(playlist.id)
+                    {canPlayPremiumSong ? (
+                        <>
+                            <Item onClick={handleLikeClick}>
+                                {isLikeSong ? (
+                                    <div className="flex items-center">
+                                        <FaHeart className="text-lg text-red-500" />
+                                        <p className="ml-2">Unlike</p>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center">
+                                        <FaRegHeart className="text-lg" />
+                                        <p className="ml-2">Like</p>
+                                    </div>
+                                )}
+                            </Item>
+                            <Submenu
+                                label={
+                                    <div className="flex items-center">
+                                        <FiPlusCircle className="text-lg" />
+                                        <p className="ml-2">Add to Playlist</p>
+                                    </div>
                                 }
                             >
-                                <div className="flex items-center">
-                                    <MdPlaylistAdd className="text-lg" />
-                                    <p className="ml-2">{playlist.name}</p>
-                                </div>
-                            </Item>
-                        ))}
-                    </Submenu>
+                                <Item
+                                    onClick={() => {
+                                        setShowCreatePlaylistModal(true);
+                                        console.log(idSong);
+                                    }}
+                                >
+                                    <div className="flex items-center">
+                                        <FiPlusCircle className="text-lg" />
+                                        <p className="ml-2">Tạo playlist mới</p>
+                                    </div>
+                                </Item>
+                                {playlists.map((playlist) => (
+                                    <Item
+                                        key={playlist.id}
+                                        onClick={() =>
+                                            handleAddToPlaylistClick(
+                                                playlist.id
+                                            )
+                                        }
+                                    >
+                                        <div className="flex items-center">
+                                            <MdPlaylistAdd className="text-lg" />
+                                            <p className="ml-2">
+                                                {playlist.name}
+                                            </p>
+                                        </div>
+                                    </Item>
+                                ))}
+                            </Submenu>
+                        </>
+                    ) : (
+                        <Item onClick={() => navigate("/premium")}>
+                            <div className="flex items-center">
+                                <FaCrown className="text-lg text-yellow-400" />
+                                <p className="ml-2">Nâng cấp Premium</p>
+                            </div>
+                        </Item>
+                    )}
                     <Item onClick={() => navigate(`/artist/${idArtist}`)}>
                         <RiUserLine className="text-lg" />
                         <p className="ml-2">Go to Artist</p>

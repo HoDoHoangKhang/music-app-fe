@@ -1,254 +1,243 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { checkPremiumStatus, handlePurchase } from "../../api/paymentsService";
 
 const Premium = () => {
-    return (
-        <div className="min-h-screen bg-[#121212] text-white font-sans">
-            {/* ===== HEADER ===== */}
-            <header className="bg-gradient-to-b from-purple-800 to-black pt-12 pb-16 px-4 text-center">
-                <h1 className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
-                    Listen without limits. Try 3 months of Premium Individual
-                    for free.
-                </h1>
-                <p className="text-sm md:text-base text-gray-200 mb-6">
-                    Only $119/month after. Cancel anytime.
-                </p>
-                <div className="flex flex-col md:flex-row gap-3 justify-center items-center mb-2">
-                    <button className="cursor-pointer bg-white text-black font-semibold px-6 py-2 rounded-full hover:bg-gray-200 transition">
-                        Get 3 months free
+    const [premiumStatus, setPremiumStatus] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [selectedPackage, setSelectedPackage] = useState(null);
+
+    useEffect(() => {
+        checkPremiumStatus()
+            .then((data) => {
+                setPremiumStatus(data);
+            })
+            .catch((error) => {
+                console.error("Error checking premium status:", error);
+            });
+    }, []);
+
+    const handlePurchaseClick = async (paymentMethod) => {
+        if (!selectedPackage) return;
+        setLoading(true);
+
+        try {
+            await handlePurchase(selectedPackage, paymentMethod);
+            toast.success("Mua gói premium thành công!");
+            setShowPaymentModal(false);
+            const newStatus = await checkPremiumStatus();
+            setPremiumStatus(newStatus);
+        } catch (error) {
+            toast.error(
+                error.response?.data?.error ||
+                    "Có lỗi xảy ra khi mua gói premium"
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Modal chọn phương thức thanh toán
+    const PaymentModal = () => (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-[#282828] p-6 rounded-lg w-96 max-w-[90%]">
+                <h3 className="text-xl font-bold mb-4">
+                    Chọn phương thức thanh toán
+                </h3>
+                <div className="space-y-3">
+                    <button
+                        onClick={() => handlePurchaseClick("credit_card")}
+                        disabled={loading}
+                        className="w-full bg-[#1DB954] hover:bg-[#1ed760] py-3 rounded-full font-bold transition disabled:opacity-50"
+                    >
+                        Thẻ tín dụng
                     </button>
-                    <button className="cursor-pointer border border-white text-white font-semibold px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
-                        See all plans
+                    <button
+                        onClick={() => handlePurchaseClick("bank_transfer")}
+                        disabled={loading}
+                        className="w-full bg-[#1DB954] hover:bg-[#1ed760] py-3 rounded-full font-bold transition disabled:opacity-50"
+                    >
+                        Chuyển khoản ngân hàng
+                    </button>
+                    <button
+                        onClick={() => handlePurchaseClick("paypal")}
+                        disabled={loading}
+                        className="w-full bg-[#1DB954] hover:bg-[#1ed760] py-3 rounded-full font-bold transition disabled:opacity-50"
+                    >
+                        PayPal
+                    </button>
+                    <button
+                        onClick={() => setShowPaymentModal(false)}
+                        className="w-full border border-white hover:bg-white hover:text-black py-3 rounded-full font-bold transition"
+                    >
+                        Hủy
                     </button>
                 </div>
-                <p className="text-xs text-gray-400">
-                    Not available to users who have already tried Premium.
+            </div>
+        </div>
+    );
+
+    // Hiển thị thông báo nếu đang có gói premium
+    if (premiumStatus?.status === "active") {
+        return (
+            <div className="min-h-screen bg-[#121212] text-white p-8">
+                <div className="bg-gradient-to-r from-[#1DB954] to-[#1ed760] p-6 rounded-lg text-center">
+                    <h2 className="text-2xl font-bold mb-2">
+                        Bạn đang sử dụng Premium!
+                    </h2>
+                    <p>
+                        Gói của bạn sẽ hết hạn vào:{" "}
+                        {new Date(
+                            premiumStatus.subscription.expired_at
+                        ).toLocaleDateString("vi-VN")}
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
+    const premiumPlans = [
+        {
+            id: "FREE",
+            name: "Dùng thử",
+            price: "0đ",
+            duration: "7 ngày",
+            color: "from-green-400 to-green-600",
+            features: [
+                "Nghe nhạc không quảng cáo",
+                "Chất lượng âm thanh cao",
+                "Nghe offline",
+            ],
+        },
+        {
+            id: "MONTHLY",
+            name: "Gói Tháng",
+            price: "299.000đ",
+            duration: "1 tháng",
+            color: "from-purple-400 to-purple-600",
+            features: [
+                "Tất cả tính năng premium",
+                "Chất lượng âm thanh cao nhất",
+                "Nghe offline không giới hạn",
+                "Hủy bất cứ lúc nào",
+            ],
+        },
+        {
+            id: "YEARLY",
+            name: "Gói Năm",
+            price: "999.000đ",
+            duration: "1 năm",
+            color: "from-blue-400 to-blue-600",
+            features: [
+                "Tất cả tính năng premium",
+                "Tiết kiệm 67%",
+                "Thanh toán 1 lần",
+                "Hủy bất cứ lúc nào",
+            ],
+        },
+    ];
+
+    return (
+        <div className="min-h-screen bg-[#121212] text-white font-sans">
+            {/* Header */}
+            <header className="bg-gradient-to-b from-[#1DB954] to-black pt-12 pb-16 px-4 text-center">
+                <h1 className="text-3xl md:text-4xl font-extrabold mb-4">
+                    Nâng cấp lên Premium
+                </h1>
+                <p className="text-lg mb-8">
+                    Trải nghiệm âm nhạc không giới hạn
                 </p>
             </header>
 
-            {/* ===== AFFORDABLE PLANS ===== */}
-            <section className="text-center py-8 px-4">
-                <h2 className="text-xl md:text-2xl font-bold mb-2">
-                    Affordable plans for any situation
-                </h2>
-                <p className="text-sm md:text-base text-gray-300 max-w-xl mx-auto">
-                    Choose a Premium plan that’s best for you. Listen to
-                    millions of songs, anytime, anywhere.
-                </p>
-                <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
-                    {/* Thay link icon thanh toán tùy ý */}
-                    <img
-                        src="https://lubevan.ca/wp-content/uploads/2019/05/Download-Visa-Logo-PNG-Pic-1024x314.png"
-                        alt="Visa"
-                        className="h-6"
-                    />
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg"
-                        alt="MasterCard"
-                        className="h-6"
-                    />
-                    <img
-                        src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
-                        alt="GPay"
-                        className="h-6"
-                    />
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg"
-                        alt="PayPal"
-                        className="h-6"
-                    />
+            {/* Premium Plans */}
+            <div className="max-w-7xl mx-auto px-4 -mt-8">
+                <div className="grid md:grid-cols-3 gap-6">
+                    {premiumPlans.map((plan) => (
+                        <div
+                            key={plan.id}
+                            className="bg-[#282828] rounded-lg overflow-hidden"
+                        >
+                            <div
+                                className={`bg-gradient-to-r ${plan.color} p-6`}
+                            >
+                                <h3 className="text-2xl font-bold mb-2">
+                                    {plan.name}
+                                </h3>
+                                <p className="text-3xl font-bold mb-1">
+                                    {plan.price}
+                                </p>
+                                <p className="text-sm opacity-90">
+                                    {plan.duration}
+                                </p>
+                            </div>
+                            <div className="p-6">
+                                <ul className="space-y-3">
+                                    {plan.features.map((feature, index) => (
+                                        <li
+                                            key={index}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <svg
+                                                className="w-5 h-5 text-[#1DB954]"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            {feature}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <button
+                                    onClick={() => {
+                                        setSelectedPackage(plan.id);
+                                        setShowPaymentModal(true);
+                                    }}
+                                    className="w-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold py-3 rounded-full mt-6 transition"
+                                >
+                                    {plan.id === "FREE"
+                                        ? "Dùng thử ngay"
+                                        : "Đăng ký ngay"}
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            </section>
+            </div>
 
-            {/* ===== ALL PREMIUM PLANS INCLUDE ===== */}
-            <section className="bg-[#1c1c1c] rounded-md mx-4 md:mx-8 lg:mx-16 px-6 md:px-10 py-8">
-                <h3 className="text-xl font-bold mb-4">
-                    All Premium plans include
-                </h3>
-                <div className="text-sm text-gray-100">
-                    <div className="grid grid-cols-3">
-                        <div className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>
-                            <span>Ad-free music listening</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>
-                            <span>Download to listen offline</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>
-                            <span>Play songs in any order</span>
-                        </div>
+            {/* Payment Methods */}
+            <div className="max-w-7xl mx-auto px-4 py-12">
+                <div className="text-center mb-8">
+                    <h2 className="text-2xl font-bold mb-4">
+                        Chấp nhận thanh toán qua
+                    </h2>
+                    <div className="flex justify-center items-center gap-6 flex-wrap">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                            alt="Visa"
+                            className="h-8"
+                        />
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                            alt="Mastercard"
+                            className="h-8"
+                        />
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                            alt="PayPal"
+                            className="h-8"
+                        />
                     </div>
-                    <div className="grid grid-cols-3">
-                        <div className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>
-                            <span>High-quality audio</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>
-                            <span>Cancel anytime</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>
-                            <span>Group Session</span>
-                        </div>
-                    </div>
                 </div>
-            </section>
+            </div>
 
-            {/* ===== PRICING CARDS ===== */}
-            <section className="py-10 px-4 flex flex-col md:flex-row justify-center gap-6 flex-wrap">
-                {/* MINI */}
-                <div className="bg-[#1c1c1c] rounded-lg p-6 w-full md:w-72">
-                    <h3 className="text-xl font-semibold text-green-400 mb-2">
-                        Mini
-                    </h3>
-                    <p className="text-sm text-gray-300">From ₹7/day</p>
-                    <ul className="mt-4 text-sm text-gray-100 space-y-1">
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>1 mobile
-                            device only
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Daily and
-                            weekly plans
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Ad-free
-                            music listening
-                        </li>
-                    </ul>
-                    <button className="cursor-pointer bg-green-500 hover:bg-green-600 w-full mt-4 py-2 rounded font-semibold text-black transition">
-                        Get Premium Mini
-                    </button>
-                </div>
-
-                {/* INDIVIDUAL */}
-                <div className="bg-[#1c1c1c] rounded-lg p-6 w-full md:w-72 border border-purple-500">
-                    <h3 className="text-xl font-semibold text-purple-400 mb-2">
-                        Individual
-                    </h3>
-                    <p className="text-sm text-gray-300">₹119/month</p>
-                    <p className="text-xs text-gray-400 mt-1">
-                        First 3 months free for eligible users
-                    </p>
-                    <ul className="mt-4 text-sm text-gray-100 space-y-1">
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>1 account
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Ad-free
-                            music listening
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Download to
-                            listen offline
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Play songs
-                            in any order
-                        </li>
-                    </ul>
-                    <button className="cursor-pointer bg-pink-400 hover:bg-pink-500 w-full mt-4 py-2 rounded font-semibold text-black transition">
-                        Try 3 months free
-                    </button>
-                </div>
-
-                {/* STUDENT */}
-                <div className="bg-[#1c1c1c] rounded-lg p-6 w-full md:w-72 border border-blue-500">
-                    <h3 className="text-xl font-semibold text-blue-400 mb-2">
-                        Student
-                    </h3>
-                    <p className="text-sm text-gray-300">₹59/month</p>
-                    <p className="text-xs text-gray-400 mt-1">
-                        First 1 month free for eligible students
-                    </p>
-                    <ul className="mt-4 text-sm text-gray-100 space-y-1">
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Discount
-                            for eligible students
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Ad-free
-                            music listening
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <span className="text-green-400">✓</span>Download to
-                            listen offline
-                        </li>
-                    </ul>
-                    <button className="cursor-pointer bg-blue-400 hover:bg-blue-500 w-full mt-4 py-2 rounded font-semibold text-black transition">
-                        Try 1 month free
-                    </button>
-                </div>
-            </section>
-
-            {/* ===== EXPERIENCE THE DIFFERENCE (COMPARISON TABLE) ===== */}
-            <section className="text-center py-10 px-4">
-                <h2 className="text-2xl font-bold">
-                    Experience the difference
-                </h2>
-                <p className="text-sm text-gray-300 mt-2">
-                    Compare the features of our Free and Premium plans.
-                </p>
-                <div className="overflow-x-auto mt-6 max-w-4xl mx-auto">
-                    <table className="w-full border-collapse border border-gray-700 text-sm">
-                        <thead className="bg-gray-800">
-                            <tr>
-                                <th className="p-3 text-left">Features</th>
-                                <th className="p-3">Spotify Free</th>
-                                <th className="p-3">Spotify Premium</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr className="border border-gray-700">
-                                <td className="p-3 text-left">
-                                    Ad-free music listening
-                                </td>
-                                <td className="p-3 text-center text-red-400">
-                                    ❌
-                                </td>
-                                <td className="p-3 text-center text-green-400">
-                                    ✔
-                                </td>
-                            </tr>
-                            <tr className="border border-gray-700">
-                                <td className="p-3 text-left">
-                                    Download songs
-                                </td>
-                                <td className="p-3 text-center text-red-400">
-                                    ❌
-                                </td>
-                                <td className="p-3 text-center text-green-400">
-                                    ✔
-                                </td>
-                            </tr>
-                            <tr className="border border-gray-700">
-                                <td className="p-3 text-left">
-                                    High-quality audio
-                                </td>
-                                <td className="p-3 text-center text-red-400">
-                                    ❌
-                                </td>
-                                <td className="p-3 text-center text-green-400">
-                                    ✔
-                                </td>
-                            </tr>
-                            <tr className="border border-gray-700">
-                                <td className="p-3 text-left">
-                                    Play in any order
-                                </td>
-                                <td className="p-3 text-center text-red-400">
-                                    ❌
-                                </td>
-                                <td className="p-3 text-center text-green-400">
-                                    ✔
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            {/* Payment Modal */}
+            {showPaymentModal && <PaymentModal />}
         </div>
     );
 };

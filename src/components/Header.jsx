@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GoHomeFill } from "react-icons/go";
+import { FaComments } from "react-icons/fa";
 import { assets } from "../assets/assets";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
@@ -41,6 +42,14 @@ const Header = () => {
                 >
                     <GoHomeFill />
                 </button>
+                {user && user.id && (
+                    <button
+                        onClick={() => navigate("/chat")}
+                        className="text-xl bg-[#242424] p-2 rounded-full cursor-pointer"
+                    >
+                        <FaComments />
+                    </button>
+                )}
             </div>
             <div className="relative group min-w-lg">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 group-hover:text-green-500 transition-colors" />

@@ -107,7 +107,6 @@ const UserContextProvider = ({ children }) => {
         </UserContext.Provider>
     );
 };
-
 export const useUser = () => {
     const context = useContext(UserContext);
     if (!context) {
@@ -115,5 +114,4 @@ export const useUser = () => {
     }
     return context;
 };
-
 export default UserContextProvider;

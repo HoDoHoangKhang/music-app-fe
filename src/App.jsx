@@ -12,24 +12,32 @@ import {
 import UserContextProvider from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
     const { audioRef, track } = useContext(PlayerContext);
+    const location = useLocation();
+    const isChatPage = location.pathname === "/chat";
+
     return (
         <UserContextProvider>
             <div className="h-screen bg-black box-border text-[14px]">
                 <Header />
                 <div className="h-[76%]">
                     <ResizablePanelGroup direction="horizontal">
+                        {!isChatPage && (
+                            <>
+                                <ResizablePanel
+                                    defaultSize={25}
+                                    className="pb-2 pl-2 pr-1 min-w-[250px]"
+                                >
+                                    <Sidebar />
+                                </ResizablePanel>
+                                <ResizableHandle className="bg-[black]" />
+                            </>
+                        )}
                         <ResizablePanel
-                            defaultSize={25}
-                            className="pb-2 pl-2 pr-1 min-w-[250px]"
-                        >
-                            <Sidebar />
-                        </ResizablePanel>
-                        <ResizableHandle className="bg-[black]" />
-                        <ResizablePanel
-                            defaultSize={75}
+                            defaultSize={isChatPage ? 100 : 75}
                             className="pb-2 pr-2 pl-1 min-w-[400px]"
                         >
                             <Display />

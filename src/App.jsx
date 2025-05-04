@@ -12,7 +12,8 @@ import {
 import UserContextProvider from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, Route, Routes } from "react-router-dom";
+import VideoDetail from "./pages/VideoDetail";
 
 const App = () => {
     const { audioRef, track } = useContext(PlayerContext);
@@ -40,7 +41,13 @@ const App = () => {
                             defaultSize={isChatPage ? 100 : 75}
                             className="pb-2 pr-2 pl-1 min-w-[400px]"
                         >
-                            <Display />
+                            <Routes>
+                                <Route
+                                    path="/video/:id"
+                                    element={<VideoDetail />}
+                                />
+                                <Route path="*" element={<Display />} />
+                            </Routes>
                         </ResizablePanel>
                     </ResizablePanelGroup>
                 </div>

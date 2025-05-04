@@ -1,0 +1,854 @@
+\documentclass[a4paper]{article}
+\usepackage{vntex}
+%\usepackage[english,vietnam]{babel}
+%\usepackage[utf8]{inputenc}
+
+%\usepackage[utf8]{inputenc}
+%\usepackage[francais]{babel}
+\usepackage{a4wide,amssymb,epsfig,latexsym,multicol,array,hhline,fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{lastpage}
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{graphicx}							% Standard graphics package
+\usepackage{array}
+\usepackage{tabularx, caption}
+\usepackage{multirow}
+\usepackage[framemethod=tikz]{mdframed}% For highlighting paragraph backgrounds
+\usepackage{multicol}
+\usepackage{rotating}
+\usepackage{graphics}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{epsfig}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usetikzlibrary{arrows,snakes,backgrounds}
+\usepackage{hyperref}
+\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} 
+%\usepackage{pstcol} 								% PSTricks with the standard color package
+
+\newtheorem{theorem}{{\bf Định lý}}
+\newtheorem{property}{{\bf Tính chất}}
+\newtheorem{proposition}{{\bf Mệnh đề}}
+\newtheorem{corollary}[proposition]{{\bf Hệ quả}}
+\newtheorem{lemma}[proposition]{{\bf Bổ đề}}
+
+\everymath{\color{black}}
+%\usepackage{fancyhdr}
+\setlength{\headheight}{40pt}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[L]{
+ \begin{tabular}{rl}
+    \begin{picture}(25,15)(0,0)
+    \put(0,-8){\includegraphics[width=8mm, height=8mm]{logo.jpg}}
+    %\put(0,-8){\epsfig{width=10mm,figure=hcmut.eps}}
+   \end{picture}&
+	%\includegraphics[width=8mm, height=8mm]{hcmut.png} & %
+	\begin{tabular}{l}
+		\textbf{\bf \ttfamily Trường Đại học Sài Gòn}\\
+		\textbf{\bf \ttfamily Khoa Công Nghệ Thông Tin}
+	\end{tabular} 	
+ \end{tabular}
+}
+\fancyhead[R]{
+	\begin{tabular}{l}
+		\tiny \bf \\
+		\tiny \bf 
+	\end{tabular}  }
+\fancyfoot{} % clear all footer fields
+\fancyfoot[L]{\scriptsize \ttfamily Bài tập lớn môn Phát triển phần mềm mã nguồn mở - Niên khóa 2024-2025}
+\fancyfoot[R]{\scriptsize \ttfamily Trang {\thepage}/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+%%%
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+\makeatletter
+\newcounter {subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection .\@alph\c@subsubsubsection}
+\newcommand\subsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\newcommand*\l@subsubsubsection{\@dottedtocline{3}{10.0em}{4.1em}}
+\newcommand*{\subsubsubsectionmark}[1]{}
+\makeatother
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Matlab,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	numbers=left,
+	stepnumber=1,
+	numbersep=1pt,    
+	firstnumber=1,
+	numberfirstline=true
+}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+TRƯỜNG ĐẠI HỌC SÀI GÒN \\
+KHOA CÔNG NGHỆ THÔNG TIN
+\end{center}
+\vspace{1cm}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=4cm]{logo.jpg}
+\end{center}
+\end{figure}
+
+\vspace{1cm}
+
+
+\begin{center}
+\begin{tabular}{c}
+	\multicolumn{1}{l}{\textbf{{\Large PHÁT TRIỂN PHẦN MỀM MÃ NGUỒN MỞ}
+    }}\\
+	~~\\
+	\hline
+	\\
+	\multicolumn{1}{l}{\textbf{{\Large Xây dựng ứng dụng}}}\\
+	\\
+	
+	\textbf{{\Huge Clone Spotify sử dụng Django}}\\
+	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\vspace{3cm}
+
+\begin{table}[h]
+\begin{tabular}{rrl}
+\hspace{5 cm} & GVHD: &Từ Lãng Phiêu\\
+& SV: & Hồ Đỗ Hoàng Khang - 3121560044\\
+% & & SV3 - MSSV \\
+% & & SV4 - MSSV\\
+\end{tabular}
+\vspace{2.5 cm}
+\end{table}
+
+\begin{center}
+
+{\footnotesize TP. HỒ CHÍ MINH, THÁNG 5/2025}
+\end{center}
+\end{titlepage}
+
+
+\thispagestyle{empty}
+
+\newpage
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Mở đầu}
+\subsection{Giới thiệu đề tài}
+
+Âm nhạc là một phần không thể thiếu trong cuộc sống hiện đại, giúp con người thư giãn và thể hiện cảm xúc.\\
+Với sự phát triển nhanh chóng của công nghệ, các nền tảng nghe nhạc trực tuyến ngày càng được ưa chuộng.\\
+Đề tài "Xây dựng website nghe nhạc trực tuyến (Spotify Clone)" hướng đến việc phát triển một hệ thống nghe nhạc trực tuyến với giao diện đẹp, dễ sử dụng, tốc độ phản hồi nhanh và trải nghiệm người dùng mượt mà, sử dụng các công nghệ hiện đại như Django, ReactJS và TailwindCSS.
+
+\subsection{Lý do chọn đề tài}
+
+Đề tài này giúp nhóm em:
+\begin{itemize}
+    \item Thực hành việc xây dựng ứng dụng web fullstack, kết hợp frontend và backend.
+    \item Củng cố kiến thức lập trình ReactJS, TailwindCSS, Django.
+    \item Hiểu rõ quy trình xây dựng hệ thống quản lý dữ liệu, xác thực người dùng và phát triển giao diện người dùng hiện đại.
+    \item Nâng cao khả năng làm việc nhóm và giải quyết bài toán thực tế.
+\end{itemize}
+
+\subsection{Mục tiêu đề tài}
+\begin{itemize}
+    \item Xây dựng website nghe nhạc với giao diện đẹp và thân thiện với người dùng.
+    \item Phát triển các tính năng như: nghe nhạc, tìm kiếm bài hát, quản lý playlist, và quản lý tài khoản người dùng.
+    \item Xây dựng hệ thống backend mạnh mẽ bằng Django để xử lý dữ liệu và xác thực.
+    \item Tối ưu hiệu suất frontend bằng ReactJS kết hợp với TailwindCSS.
+    \item Đảm bảo website hoạt động tốt trên các thiết bị khác nhau (desktop, tablet, mobile).
+\end{itemize}
+
+\subsection{Phạm vi đề tài}
+\begin{itemize}
+    \item Website hỗ trợ nghe nhạc trực tuyến với dữ liệu từ hệ thống backend Django.
+    \item Người dùng có thể đăng ký và đăng nhập tài khoản cá nhân.
+    \item Cho phép tìm kiếm bài hát, tạo và quản lý playlist cá nhân.
+    \item Phát bài hát với chức năng phát, tạm dừng và chuyển bài.
+    \item Chỉ hỗ trợ phát nhạc online, không hỗ trợ tải nhạc về thiết bị.
+\end{itemize}
+
+\subsection{Tính ứng dụng thực tiễn}
+\begin{itemize}
+    \item Có thể mở rộng thành nền tảng nghe nhạc chuyên nghiệp.
+    \item Phục vụ nhu cầu giải trí và nghe nhạc online cho cá nhân hoặc tổ chức.
+    \item Tiềm năng tích hợp thêm các tính năng nâng cao như gợi ý bài hát, chia sẻ playlist và bình luận bài hát trong tương lai.
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Phân tích yêu cầu hệ thống}
+\subsection{Yêu cầu chức năng}
+\begin{itemize}
+    \item Đăng ký tài khoản và đăng nhập.
+    \item Tìm kiếm bài hát theo tên, nghệ sĩ hoặc thể loại.
+    \item Hiển thị danh sách bài hát nổi bật, playlist đề xuất.
+    \item Phát bài hát, điều khiển phát nhạc (play, pause, next, previous).
+    \item Tạo, chỉnh sửa và xóa playlist cá nhân.
+    \item Xem thông tin chi tiết bài hát và nghệ sĩ.
+\end{itemize}
+
+\subsection{Yêu cầu phi chức năng}
+\begin{itemize}
+    \item Giao diện đẹp, dễ sử dụng và thân thiện với người dùng.
+    \item Thời gian tải trang nhanh và phản hồi tức thì khi thực hiện thao tác.
+    \item Hệ thống bảo mật, đảm bảo an toàn dữ liệu người dùng.
+    \item Website phải responsive, tương thích nhiều thiết bị khác nhau.
+\end{itemize}
+
+\subsection{Yêu cầu kỹ thuật}
+\begin{itemize}
+    \item Ngôn ngữ lập trình backend: Python (Django Framework).
+    \item Ngôn ngữ lập trình frontend: JavaScript (ReactJS).
+    \item Thiết kế giao diện: TailwindCSS.
+    \item Giao tiếp frontend-backend: sử dụng RESTful API.
+    \item Quản lý phiên đăng nhập: JWT (JSON Web Token) hoặc Session.
+    \item Công cụ phát triển: Visual Studio Code, Git, GitHub, Postman.
+\end{itemize}
+
+\newpage
+
+\section{Công nghệ áp dụng}
+\subsection{Django}
+Django là một framework phát triển web mạnh mẽ được xây dựng bằng ngôn ngữ Python. Nó được thiết kế để giúp các nhà phát triển xây dựng các ứng dụng web phức tạp một cách nhanh chóng và dễ dàng, bằng cách cung cấp các công cụ và thư viện mạnh mẽ.\\
+
+\begin{itemize}
+    \item ORM(Object-Relational Mapping): Django cung cấp một ORM mạnh mẽ, cho phép nhà phát triển tương tác với cơ sở dữ liệu thông qua các đối tượng Python, thay vì việc viết các truy vấn SQL trực tiếp. Điều này giúp giảm sự phụ thuộc vào cơ sở dữ liệu cụ thể và làm cho việc thay đổi cơ sở dữ liệu trở nên dễ dàng hơn.
+    \item URL Routing: Django sử dụng một hệ thống routing mạnh mẽ để ánh xạ các URL vào các view xử lý tương ứng. Điều này giúp tổ chức code của bạn và cho phép bạn dễ dàng mở rộng ứng dụng của mình.
+    \item Admin interface tự động: Django cung cấp một giao diện quản trị tự động được tạo dựa trên mô hình dữ liệu được xác định trong ứng dụng của bạn. Điều này giúp bạn quản lý và thao tác với dữ liệu một cách dễ dàng mà không cần phải viết code cho phần quản trị.
+    \item Bảo mật: Django đi kèm với nhiều tính năng bảo mật tích hợp sẵn như bảo vệ chống CSRF (Cross-Site Request Forgery), bảo vệ chống XSS (Cross-Site Scripting), và quản lý phiên.
+    \item Cộng đồng và tài liệu: Django có một cộng đồng lớn và năng động, với nhiều tài liệu, hướng dẫn và các thư viện bổ sung giúp bạn dễ dàng học và sử dụng.
+    
+\end{itemize}
+
+\subsection{Django REST Framework (DRF)}
+Django REST Framework (DRF) là một bộ công cụ mở rộng Django, được thiết kế để giúp việc xây dựng các API RESTful trở nên dễ dàng và mạnh mẽ hơn. Được xây dựng trên cơ sở của Django, DRF cung cấp các tính năng và công cụ cho việc xử lý dữ liệu JSON, quản lý xác thực, kiểm tra quyền truy cập, và nhiều hơn nữa. \\
+Dưới đây là một số tính năng chính của Django REST Framework:\\
+\begin{itemize}
+    \item Serializers: DRF cung cấp một cơ chế mạnh mẽ để chuyển đổi các đối tượng Python sang JSON và ngược lại thông qua serializers. Serializers giúp xác định các trường dữ liệu cần được bao gồm hoặc loại bỏ khi trả về dữ liệu qua API, cũng như xử lý validation của dữ liệu đầu vào.
+    \item Viewsets và Routers: DRF giúp tổ chức code của bạn thông qua việc sử dụng viewsets và routers. Viewsets cho phép bạn xác định tất cả các phương thức API (như GET, POST, PUT, DELETE) cho một tập hợp các đối tượng, trong khi routers tự động xác định các URL cho các viewsets của bạn.
+    \item Authentication và Permissions: DRF cung cấp các lớp cho xác thực và kiểm tra quyền truy cập, cho phép bạn xác định ai có quyền truy cập vào các API của bạn và những gì họ có thể làm.
+    \item Throttling: Để ngăn chặn các cuộc tấn công DDOS (Distributed Denial of Service) hoặc giới hạn số lượng yêu cầu mà một người dùng có thể thực hiện trong một khoảng thời gian nhất định, DRF cung cấp các cơ chế throttling.
+    \item Pagination: DRF cho phép bạn dễ dàng thực hiện phân trang cho kết quả trả về từ các API, giúp quản lý tải trang và tối ưu hóa hiệu suất.
+    \item Tích hợp tốt với Django: DRF được thiết kế để tích hợp tốt với Django, cho phép bạn sử dụng các tính năng của Django như ORM, authentication backend, và middleware một cách dễ dàng.
+   \item  Tài liệu và hỗ trợ: Django REST Framework có tài liệu phong phú và cộng đồng hỗ trợ lớn, bao gồm các ví dụ, hướng dẫn và diễn đàn để giúp bạn giải quyết các vấn đề phát triển.
+\end{itemize}
+
+\subsection{Django Channels}
+Django Channels là một thư viện mở rộng cho Django, cho phép bạn xây dựng ứng dụng web theo mô hình real-time và các ứng dụng có khả năng xử lý các sự kiện đồng thời (concurrent events). Trong Django truyền thống, các request được xử lý tuần tự, điều này có nghĩa là mỗi request phải chờ đợi cho đến khi request trước đó hoàn thành trước khi được xử lý. Tuy nhiên, với Django Channels, bạn có thể xử lý các sự kiện đồng thời mà không cần phải chờ đợi.\\
+
+Dưới đây là một số tính năng chính của Django Channels: \\
+\begin{itemize}
+    \item Real-time: Django Channels cho phép bạn xây dựng các ứng dụng real-time như chat, trò chơi trực tuyến, thông báo tức thời và nhiều ứng dụng khác mà yêu cầu giao tiếp đồng thời giữa máy chủ và trình duyệt.
+    \item Websockets: Thư viện này hỗ trợ giao thức Websockets, cho phép máy chủ gửi dữ liệu tới trình duyệt mà không cần yêu cầu mới từ phía client. Điều này giúp giảm độ trễ và tăng tính tương tác trong ứng dụng.
+    \item Protocol support: Ngoài Websockets, Django Channels còn hỗ trợ một loạt các giao thức như HTTP long-polling, HTTP2, và MQTT (Message Queuing Telemetry Transport).
+    \item Routing và Consumers: Channels sử dụng các "consumers" để xử lý các message được gửi tới từ client, và các "routers" để xác định cách xử lý các message dựa trên loại và nội dung của chúng.
+    \item Asynchronous I/O: Channels hỗ trợ việc sử dụng các coroutine và async/await trong Python để xử lý các tác vụ I/O mà không cần chờ đợi, giúp tối ưu hiệu suất của ứng dụng trong các trường hợp có nhiều kết nối đồng thời.
+    \item Integrations: Django Channels tích hợp tốt với Django, cho phép bạn sử dụng các tính năng của Django như middleware, authentication, và ORM trong các ứng dụng Channels.
+\end{itemize}
+
+Tóm lại, Django Channels là một công cụ mạnh mẽ cho việc phát triển các ứng dụng real-time và có khả năng xử lý sự kiện đồng thời trong Django. Nó mở ra khả năng xây dựng các ứng dụng web tương tác cao và cung cấp trải nghiệm người dùng tốt hơn.
+
+\subsection{ReactJS}
+ReactJS là một thư viện JavaScript phổ biến được phát triển bởi Facebook, được sử dụng để xây dựng giao diện người dùng (UI) cho các ứng dụng web hiệu quả và linh hoạt. Đặc điểm chính của ReactJS là việc sử dụng một cách tiếp cận gọi là "component-based", trong đó UI được chia thành các thành phần độc lập, tái sử dụng và dễ quản lý. \\
+
+Dưới đây là một số điểm nổi bật của ReactJS:
+\begin{itemize}
+    \item Component-Based: ReactJS cho phép bạn xây dựng UI bằng cách tạo ra các thành phần (components) độc lập. Mỗi thành phần có thể chứa mã HTML, CSS và JavaScript của riêng nó, giúp tăng tính tái sử dụng và dễ dàng quản lý mã nguồn.
+    \item Virtual DOM: ReactJS sử dụng một cơ chế gọi là Virtual DOM để tối ưu hóa việc cập nhật UI. Thay vì cập nhật trực tiếp DOM mỗi khi có thay đổi, React tạo ra một bản sao của DOM (Virtual DOM) và so sánh nó với DOM thực tế. Sau đó, React chỉ cập nhật những phần của DOM mà thực sự thay đổi, giúp tăng hiệu suất và đáp ứng nhanh hơn.
+    \item One-Way Data Binding: ReactJS sử dụng mô hình one-way data binding, có nghĩa là dữ liệu chỉ di chuyển theo một hướng từ component cha đến các component con. Điều này giúp giảm sự phức tạp và dễ dàng theo dõi dòng dữ liệu trong ứng dụng.
+    \item JSX: JSX là một phần mở rộng của JavaScript, cho phép bạn viết mã HTML trong JavaScript một cách dễ dàng và hiệu quả. JSX giúp tạo ra mã nguồn dễ đọc hơn và cho phép bạn kết hợp logic JavaScript và UI một cách mạch lạc.
+    \item Tích hợp tốt với các thư viện và các framework khác: ReactJS có thể tích hợp dễ dàng với các thư viện và frameworks khác như Redux (quản lý trạng thái ứng dụng), React Router (định tuyến trong ứng dụng đơn trang), và các thư viện UI khác như Material-UI hoặc Ant Design.
+    \item Cộng đồng lớn và hỗ trợ mạnh mẽ: ReactJS có một cộng đồng lớn và năng động, với nhiều tài liệu, hướng dẫn và ví dụ mã nguồn mở được chia sẻ trên Internet. Điều này làm cho việc học và phát triển ứng dụng React trở nên dễ dàng hơn.
+\end{itemize}
+
+Tóm lại, ReactJS là một thư viện JavaScript mạnh mẽ và linh hoạt, được sử dụng rộng rãi để xây dựng các ứng dụng web hiệu quả, linh hoạt và dễ bảo trì. Nó là lựa chọn phổ biến cho các nhà phát triển web khi muốn xây dựng các ứng dụng có giao diện người dùng phức tạp và tương tác.
+
+\subsection{Redux-Toolkit}
+Redux Toolkit là một bộ công cụ được cung cấp bởi Redux để giúp việc quản lý trạng thái ứng dụng Redux trở nên đơn giản và hiệu quả hơn. Nó cung cấp các công cụ và tiện ích tích hợp sẵn để giảm thiểu việc viết mã lặp đi lặp lại và tăng khả năng bảo trì của mã nguồn.\\
+
+Dưới đây là một số điểm nổi bật của Redux Toolkit:
+
+\begin{itemize}
+    \item Cấu trúc dự án chuẩn: Redux Toolkit cung cấp cho bạn một cấu trúc dự án chuẩn, giúp bạn tổ chức mã nguồn ứng dụng một cách rõ ràng và dễ hiểu.
+    \item CreateSlice: Redux Toolkit giới thiệu một khái niệm mới gọi là "Slice", là một phần của store Redux chứa reducer và các action tương ứng. configureStore: Redux Toolkit cung cấp một hàm configureStore giúp bạn tạo store Redux một cách dễ dàng với các middleware được cài đặt sẵn, bao gồm cả Redux Thunk cho việc xử lý các action không đồng bộ.
+    \item Redux DevTools Extension Integration: Redux Toolkit tích hợp sẵn với Redux DevTools Extension, giúp bạn dễ dàng theo dõi và debug trạng thái của ứng dụng trong quá trình phát triển.
+    \item Immer Integration: Redux Toolkit tích hợp sẵn với thư viện immer, cho phép bạn viết các reducer một cách dễ dàng và tự nhiên bằng cách sử dụng cú pháp mutable.
+    \item Cải thiện hiệu suất: Redux Toolkit cung cấp các công cụ và tối ưu hóa giúp cải thiện hiệu suất của ứng dụng Redux, bao gồm việc giảm thiểu số lượng re-renders không cần thiết và tối ưu hóa việc thao tác với trạng thái.
+\end{itemize}
+Tóm lại, Redux Toolkit là một công cụ mạnh mẽ và linh hoạt giúp việc quản lý trạng thái ứng dụng Redux trở nên đơn giản và hiệu quả hơn. Điều này giúp giảm bớt công việc lặp lại và tăng khả năng bảo trì của mã nguồn, đồng thời cải thiện hiệu suất của ứng dụng Redux.
+
+\newpage
+\section{Phân tích và thiết kế}
+\subsection{Cơ sở dữ liệu}
+\subsubsection{ERD}
+\begin{figure}[!htb]
+    \centering
+    \rotatebox{90}{\includegraphics[width=1\linewidth]{erd.png}}
+    \caption{Erd}
+    \label{fig:enter-label}
+\end{figure}
+\subsubsection{Vật lý}
+\newpage
+\begin{table}
+    \centering
+    \label{tab:danh-sach-bang}
+    \begin{tabular}{|c|l|p{8cm}|}
+        \hline
+        \textbf{STT} & \textbf{Tên bảng} & \textbf{Mô tả} \\
+        \hline
+        1 & users & Bảng thông tin người dùng (Tên, email, mật khẩu, quyền truy cập) \\
+        2 & artists & Bảng thông tin nghệ sĩ (ID người dùng, tiểu sử, liên kết mạng xã hội) \\
+        3 & followers & Bảng lưu trữ thông tin về người dùng theo dõi nhau \\
+        4 & genres & Bảng thể loại nhạc (Tên thể loại) \\
+        5 & albums & Bảng album (Tên album, nghệ sĩ, thể loại, ảnh bìa) \\
+        6 & songs & Bảng bài hát (Tiêu đề, nghệ sĩ, album, thể loại, độ dài, URL file nhạc) \\
+        7 & collaborations & Bảng thông tin hợp tác giữa các nghệ sĩ trên các bài hát \\
+        8 & playlists & Bảng playlist của người dùng (Tên playlist, người tạo) \\
+        9 & playlist\_songs & Bảng quan hệ giữa playlist và bài hát (playlist_id, song_id) \\
+        10 & listening\_history & Lịch sử nghe nhạc của người dùng (user_id, song_id) \\
+        11 & likes & Bảng lưu thông tin người dùng yêu thích bài hát hoặc album \\
+        12 & subscriptions & Bảng đăng ký gói dịch vụ của người dùng (Trạng thái, thời gian bắt đầu và hết hạn) \\
+        13 & transactions & Lịch sử giao dịch thanh toán (số tiền, phương thức thanh toán) \\
+        14 & private\_messages & Bảng tin nhắn riêng tư giữa người dùng \\
+        15 & fandoms & Bảng fandom của nghệ sĩ (Tên, mô tả, người tạo) \\
+        16 & fandom\_members & Bảng thành viên của các fandom (user_id, fandom_id) \\
+        17 & group\_messages & Bảng tin nhắn trong nhóm fandom (fandom_id, sender_id, message) \\
+        \hline
+    \end{tabular}
+    \caption{Danh sách bảng trong cơ sở dữ liệu}
+\end{table}
+Danh sách trên là một số bảng chính, ngoài ra còn có một số bảng cấu hình của framework Django. Sau đây là cấu trúc chi tiết từng bảng\\
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-user.png}
+    \caption{Bảng user}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-transactions.png}
+    \caption{Bảng transactions}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-subscriptions.png}
+    \caption{Bảng subscriptions}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-songs.png}
+    \caption{Bảng songs}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-private_messages.png}
+    \caption{Bảng private messages}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-playlist_songs.png}
+    \caption{Bảng playlis _songs}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-playlists.png}
+    \caption{Bảng playlists}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-listening_history.png}
+    \caption{Bảng listening history}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-likes.png}
+    \caption{Bảng likes}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-group_messages.png}
+    \caption{Bảng group messages}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-genres.png}
+    \caption{Bảng genres}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-followers.png}
+    \caption{Bảng followers}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-fandom_members.png}
+    \caption{Bảng fandom members}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-fandoms.png}
+    \caption{Bảng fandoms}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-collaborations.png}
+    \caption{Bảng collaborations}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-artists.png}
+    \caption{Bảng artists}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{dtb-albums.png}
+    \caption{Bảng albums}
+    \label{fig:enter-label}
+\end{figure}
+
+\clearpage
+\newpage
+\subsection{Phân chia hệ thống}
+Hệ thống của ứng dụng clone Spotify sẽ được chia thành các ứng dụng con nhằm đảm bảo sự linh hoạt trong việc quản lý và mở rộng. Sau khi phân tích các chức năng cần thiết, hệ thống được chia thành 5 ứng dụng con như sau:
+
+\begin{itemize}
+    \item **Authentication**: Xử lý các chức năng đăng nhập, đăng ký tài khoản người dùng, xác thực và bảo mật.
+    \item **Music**: Xử lý các chức năng liên quan đến âm nhạc, bao gồm tìm kiếm bài hát, tạo playlist, và phát nhạc.
+    \item **Library**: Quản lý thư viện của người dùng, bao gồm các album, playlist và bài hát đã lưu.
+    \item **Chat**: Xử lý các tính năng giao tiếp trong hệ thống, bao gồm gửi tin nhắn, thảo luận với bạn bè, và chia sẻ bài hát.
+    \item **Notifications**: Xử lý việc gửi thông báo đến người dùng về các bài hát mới, cập nhật playlist, và các hoạt động khác trong hệ thống.
+\end{itemize}
+
+\subsection{Mô tả chi tiết các ứng dụng con}
+
+\subsubsection{Authentication}
+Ứng dụng **Authentication** sẽ xử lý tất cả các chức năng liên quan đến đăng nhập, đăng ký và xác thực tài khoản của người dùng:
+
+\begin{itemize}
+    \item Đăng ký tài khoản người dùng.
+    \item Đăng nhập tài khoản:
+    \begin{itemize}
+        \item Đăng nhập bằng tài khoản người dùng.
+        \item Đăng nhập qua tài khoản Google.
+        \item Đăng nhập qua tài khoản Facebook.
+    \end{itemize}
+    \item Quên mật khẩu và phục hồi tài khoản.
+\end{itemize}
+
+\subsubsection{Music}
+Ứng dụng **Music** sẽ xử lý các chức năng liên quan đến âm nhạc, bao gồm tìm kiếm và phát các bài hát, album, và playlist:
+
+\begin{itemize}
+    \item Tìm kiếm bài hát theo tên, nghệ sĩ, hoặc thể loại.
+    \item Phát nhạc trực tuyến.
+    \item Xem thông tin chi tiết bài hát, album và nghệ sĩ.
+    \item Tạo và quản lý playlist cá nhân.
+    \item Thêm bài hát vào playlist.
+    \item Gợi ý bài hát, album và playlist dựa trên sở thích người dùng.
+\end{itemize}
+
+\subsubsection{Library}
+Ứng dụng **Library** sẽ quản lý tất cả các bài hát, album, và playlist mà người dùng đã lưu:
+
+\begin{itemize}
+    \item Lưu và truy xuất danh sách bài hát yêu thích.
+    \item Quản lý các album yêu thích.
+    \item Quản lý các playlist cá nhân của người dùng.
+    \item Xem lịch sử phát nhạc.
+\end{itemize}
+
+\subsubsection{Chat}
+Ứng dụng **Chat** sẽ xử lý các tính năng giao tiếp, giúp người dùng trao đổi bài hát và thảo luận với bạn bè:
+
+\begin{itemize}
+    \item Gửi tin nhắn văn bản và tin nhắn đa phương tiện (ảnh, video, bài hát) cho bạn bè.
+    \item Tạo các cuộc trò chuyện nhóm để chia sẻ bài hát và thảo luận.
+    \item Gửi lời mời kết bạn và quản lý các mối quan hệ.
+    \item Xem danh sách bạn bè và các cuộc trò chuyện gần đây.
+    \item Tích hợp âm nhạc vào chat (ví dụ: gửi bài hát đang phát).
+\end{itemize}
+
+\subsubsection{Notifications}
+Ứng dụng **Notifications** sẽ gửi các thông báo cho người dùng về những bài hát mới, cập nhật playlist và các hoạt động khác trong hệ thống:
+
+\begin{itemize}
+    \item Thông báo về bài hát mới, album mới phát hành.
+    \item Cập nhật về các playlist mới.
+    \item Thông báo từ bạn bè (như khi có lời mời kết bạn, tin nhắn mới, hoặc chia sẻ bài hát).
+\end{itemize}
+
+\subsection{Mô hình hoạt động của hệ thống}
+Để hình dung rõ hơn về cách thức hoạt động của hệ thống, ta có thể tham khảo mô hình hoạt động dưới đây. Mô hình này thể hiện các tương tác giữa các thành phần của hệ thống, bao gồm việc người dùng đăng nhập, phát nhạc, quản lý thư viện và chia sẻ với bạn bè.
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section {Thực nghiệm và phân tích kết quả}
+
+\subsection{Đăng nhập vào hệ thống}
+
+Người dùng thực hiện đăng ký tài khoản trước khi đăng nhập.
+Khi vào trang đăng nhập, giao diện sẽ hiển thị như sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.5\linewidth]{login.png}
+    \caption{Giao diện đăng nhập}
+    \label{fig:login}
+\end{figure}
+
+Người dùng có thể đăng nhập theo 2 cách:
+
+\begin{itemize}
+    \item Cách 1: Đăng nhập nhanh bằng liên kết Google hoặc Facebook.
+    \item Cách 2: Nhập username/email và mật khẩu đã đăng ký.
+\end{itemize}
+
+\subsection{Giao diện màn hình chính}
+
+Sau khi đăng nhập thành công, người dùng sẽ được đưa đến giao diện chính như sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{home-1.png}
+    \caption{Giao diện màn hình chính}
+    \label{fig:home}
+\end{figure}
+
+Màn hình chính bao gồm các thành phần:
+
+\begin{itemize}
+    \item Thanh điều hướng bên trái giúp người dùng truy cập nhanh vào Thư viện nhạc, Trang chủ, Tìm kiếm, và các tính năng quản lý tài khoản.
+    \item Phần trung tâm hiển thị các bài hát và danh sách phát nổi bật, được cá nhân hóa dựa trên lịch sử nghe nhạc.
+    \item Thanh phát nhạc bên dưới cho phép người dùng điều khiển bài hát đang phát, bao gồm: nút Play/Pause, chuyển bài, và điều chỉnh âm lượng.
+\end{itemize}
+
+\subsection{Giao diện trang nghệ sĩ}
+
+Khi chọn một nghệ sĩ bất kỳ, giao diện sẽ hiển thị thông tin và các bài hát nổi bật của nghệ sĩ đó:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{artist.png}
+    \caption{Giao diện trang nghệ sĩ}
+    \label{fig:artist}
+\end{figure}
+
+Người dùng có thể:
+\begin{itemize}
+    \item Theo dõi hoặc bỏ theo dõi nghệ sĩ.
+    \item Phát nhanh các bài hát phổ biến nhất của nghệ sĩ.
+    \item Xem thông tin như số lượng người nghe hàng tháng, album nổi bật và danh sách bài hát phổ biến.
+\end{itemize}
+
+\subsection{Giao diện Album}
+
+Khi người dùng chọn xem một album, hệ thống hiển thị danh sách các bài hát trong album như hình dưới đây:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{albums.png}
+    \caption{Giao diện album}
+    \label{fig:album}
+\end{figure}
+
+Ở đây người dùng có thể:
+\begin{itemize}
+    \item Nghe tất cả các bài hát trong album theo thứ tự.
+    \item Lưu album vào thư viện cá nhân của mình.
+    \item Chia sẻ album lên các mạng xã hội.
+\end{itemize}
+
+\subsection{Quản lý Playlist}
+
+Khi vào giao diện playlist cá nhân, người dùng có thể quản lý playlist với các tính năng sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{playlists.png}
+    \caption{Giao diện quản lý playlist}
+    \label{fig:playlist}
+\end{figure}
+
+Các chức năng quản lý bao gồm:
+\begin{itemize}
+    \item Tạo playlist mới, chỉnh sửa tên và mô tả playlist.
+    \item Thêm/xóa bài hát ra khỏi playlist.
+    \item Sắp xếp thứ tự các bài hát theo mong muốn.
+    \item Chia sẻ playlist với bạn bè.
+\end{itemize}
+
+\subsection{Trang quản lý tài khoản}
+
+Người dùng có thể truy cập vào trang quản lý tài khoản cá nhân với các tùy chọn cài đặt như sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{account.png}
+    \caption{Giao diện quản lý tài khoản}
+    \label{fig:account}
+\end{figure}
+
+Các tùy chọn bao gồm:
+\begin{itemize}
+    \item Cập nhật thông tin cá nhân (hình đại diện, tên hiển thị).
+    \item Thay đổi mật khẩu.
+    \item Quản lý thông báo từ ứng dụng.
+    \item Điều chỉnh cài đặt chất lượng âm thanh và nội dung hiển thị.
+\end{itemize}
+
+\subsection{Chức năng nâng cấp Premium}
+
+Hệ thống cung cấp lựa chọn các gói Premium, người dùng có thể nâng cấp tài khoản theo các lựa chọn sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{premium.png}
+    \caption{Giao diện nâng cấp Premium}
+    \label{fig:premium}
+\end{figure}
+
+Các gói bao gồm:
+\begin{itemize}
+    \item Dùng thử 7 ngày miễn phí.
+    \item Gói tháng hoặc năm với mức giá ưu đãi và nhiều tiện ích.
+\end{itemize}
+
+Sau khi nâng cấp thành công, người dùng sẽ nhận được thông báo như hình sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{active-premium.png}
+    \caption{Thông báo kích hoạt Premium thành công}
+    \label{fig:active-premium}
+\end{figure}
+
+\subsection{Chức năng trò chuyện và chia sẻ nhạc}
+
+Người dùng có thể sử dụng chức năng chat để trò chuyện với bạn bè và chia sẻ các bài hát trực tiếp trong ứng dụng như sau:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{chat.png}
+    \caption{Giao diện chat và chia sẻ nhạc}
+    \label{fig:chat}
+\end{figure}
+
+Các tính năng chính của chức năng trò chuyện bao gồm:
+\begin{itemize}
+    \item Gửi tin nhắn văn bản.
+    \item Chia sẻ nhanh bài hát, playlist hoặc album trực tiếp trong khung chat.
+    \item Xem trước bài hát được chia sẻ và phát ngay lập tức trong ứng dụng.
+    \item Thông báo trạng thái online/offline của người dùng.
+\end{itemize}
+
+\newpage
+\section{Cách thức cài đặt, môi trường cài ứng dụng}
+
+\section*{Download Project}
+\begin{enumerate}
+  \item Change into the project directory
+  \begin{lstlisting}[language=bash]
+  git clone https://github.com/HoDoHoangKhang/music_app_fe.git
+  \end{lstlisting}
+  
+  \item Navigate to the project directory
+  \begin{lstlisting}[language=bash]
+  cd music_app_fe
+  \end{lstlisting}
+\end{enumerate}
+
+\section*{Start Client}
+\subsection*{Requirement: Use Node.js v20.11.0}
+\begin{enumerate}
+  \item Change into the client directory
+  \begin{lstlisting}[language=bash]
+  cd client
+  \end{lstlisting}
+  
+  \item Install npm dependencies
+  \begin{lstlisting}[language=bash]
+  npm install
+  \end{lstlisting}
+  
+  \item Start the client interface
+  \begin{lstlisting}[language=bash]
+  npm run dev
+  \end{lstlisting}
+\end{enumerate}
+
+\section*{Start Server}
+\subsection*{Django Setup - Use Python version 3.12}
+\begin{enumerate}
+  \item Change into the server directory:
+  \begin{lstlisting}[language=bash]
+  cd server
+  \end{lstlisting}
+  \item Install pipenv:
+  \begin{lstlisting}[language=bash]
+  pip install pipenv
+  \end{lstlisting}
+  
+  \item Activate the virtual environment:
+  \begin{lstlisting}[language=bash]
+  pipenv shell
+  \end{lstlisting}
+  
+  \item Update the database:
+  \begin{lstlisting}[language=bash]
+  python manage.py migrate
+  \end{lstlisting}
+  
+  \item Start the server:
+  \begin{lstlisting}[language=bash]
+  daphne config.asgi:application
+  \end{lstlisting}
+\end{enumerate}
+
+\section{Kết luận và định hướng phát triển}
+
+\subsection{Kết luận}
+
+Đồ án đã hoàn thiện một ứng dụng trò chuyện tích hợp nhiều tính năng cơ bản như: nhắn tin, chia sẻ nhạc, quản lý tài khoản và nâng cấp Premium. Hệ thống vận hành ổn định trong môi trường thử nghiệm, giao diện người dùng thân thiện và có khả năng mở rộng.
+
+\subsection{Hướng phát triển tương lai}
+
+\begin{itemize}
+    \item \textbf{Cải thiện hiệu năng và sửa lỗi:}
+    \begin{itemize}
+        \item Tối ưu hóa tốc độ phản hồi và xử lý dữ liệu.
+        \item Khắc phục các lỗi còn tồn tại trong giao diện và backend.
+    \end{itemize}
+    
+    \item \textbf{Bổ sung tính năng mới:}
+    \begin{itemize}
+        \item Hỗ trợ nhiều nền tảng như mobile app.
+        \item Đồng bộ hóa tài khoản đa thiết bị.
+        \item Gợi ý bài hát và tìm kiếm thông minh.
+    \end{itemize}
+    
+    \item \textbf{Cải tiến giao diện:}
+    \begin{itemize}
+        \item Tối ưu UX/UI theo phản hồi người dùng.
+        \item Áp dụng responsive design phù hợp nhiều thiết bị.
+    \end{itemize}
+    
+    \item \textbf{Bảo mật hệ thống:}
+    \begin{itemize}
+        \item Thêm xác thực hai bước (2FA).
+        \item Mã hóa dữ liệu quan trọng (JWT, HTTPS).
+    \end{itemize}
+    
+    \item \textbf{Tích hợp dịch vụ mở rộng:}
+    \begin{itemize}
+        \item Cho phép đăng bài viết, bình luận.
+        \item Hỗ trợ sticker, GIF, thăm dò ý kiến.
+        \item Tích hợp Spotify, YouTube, Zalo,...
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\begin{thebibliography}{8}
+\bibitem{django-doc}
+\textit{https://docs.djangoproject.com/en/5.0/}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{drf-doc}
+\textit{https://www.django-rest-framework.org/topics/documenting-your-api/}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{channels-doc}
+\textit{https://channels.readthedocs.io/en/latest/}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{jwt-doc}
+\textit{https://django-rest-framework-simplejwt.readthedocs.io/en/latest/}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{github-auth}
+\textit{https://github.com/jameshenry2020/complete-authentication-with-JWT-and-Social-Auth-in-django-rest-framework-and-react}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{github-chat}
+\textit{https://github.com/kmrifat/django\_chat}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{gemini}
+\textit{https://gemini.google.com/app}, truy cập lần cuối: 01/05/2024.
+
+\bibitem{chatgpt}
+\textit{https://chatgpt.com/}, truy cập lần cuối: 01/05/2024.
+\end{thebibliography}
+
+\end{document}
+
+

@@ -295,3 +295,62 @@ export const getLikedAlbums = async () => {
         return null;
     }
 };
+
+// Lấy danh sách tất cả video
+export const getAllVideos = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/videos/`, {
+            headers: getAuthHeaders(),
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching videos:", error);
+        return null;
+    }
+};
+
+// Lấy chi tiết một video theo ID
+export const getVideoDetail = async (videoId) => {
+    if (!videoId) {
+        console.warn("Video ID không hợp lệ!");
+        return null;
+    }
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/videos/${videoId}/`, {
+            headers: getAuthHeaders(),
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching video detail:", error);
+        return null;
+    }
+};
+
+// Xóa video
+export const deleteVideo = async (videoId) => {
+    try {
+        await axios.delete(`${API_BASE_URL}/videos/${videoId}/`, {
+            headers: getAuthHeaders(),
+        });
+        return true;
+    } catch (error) {
+        console.error("Error deleting video:", error);
+        return false;
+    }
+};
+
+// Tăng số lượt xem của video
+export const incrementVideoViews = async (videoId) => {
+    try {
+        const response = await axios.post(
+            `${API_BASE_URL}/videos/${videoId}/increment_views/`,
+            {},
+            { headers: getAuthHeaders() }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error incrementing video views:", error);
+        return null;
+    }
+};
